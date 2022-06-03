@@ -2,7 +2,7 @@
 Powershell script to process level files from the game Syndicate Wars into human readable format. 
 Heavily based on http://syndicate.lubiki.pl/downloads/bullfrog_utils_swars_level_reader.zip but with some new features
 
-Run with SWLevelReader.ps1 <filename>
+Run with SWLevelReader.ps1 {filename}
   
   e.g. SWLevelReader.ps1 C006L001.DAT
 
