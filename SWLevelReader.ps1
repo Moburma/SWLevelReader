@@ -140,8 +140,10 @@ $gpos = $gpos + 43
 
 $estring = 0
 
+write-host ""
+write-host "Group Names Found:"
 
-DO{   #Extract all Group names    
+DO{   #Extract all Group names
     
     $groupbytes = [System.IO.File]::ReadAllBytes("$filename")
     # Decode first 12 bytes to a text assuming ASCII encoding.
