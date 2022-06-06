@@ -1,7 +1,7 @@
 ﻿#Syndicate Wars Level Reader by Moburma
 
-#VERSION 0.2
-#LAST MODIFIED: 05/06/2022
+#VERSION 0.3
+#LAST MODIFIED: 06/06/2022
 
 <#
 .SYNOPSIS
@@ -28,12 +28,23 @@
 
 Param ($filename)
 
+
 if ($filename -eq $null){
 write-host "Error - No argument provided. Please supply a target level file to read!"
 write-host ""
 write-host "Example: SWLevelReader.ps1 C006L001.DAT"
 }
 Else{
+
+$fileexists = Test-Path -Path $filename -PathType Leaf
+
+if ($fileexists -eq 0){
+write-host "Error - No file with that name found. Please supply a target level file to read!"
+write-host ""
+write-host "Example: SWLevelReader.ps1 C006L001.DAT"
+exit
+}
+
 $levfile = Get-Content $filename -Encoding Byte -ReadCount 0
 
 function convert16bitint($Byteone, $Bytetwo) {
@@ -130,6 +141,13 @@ $groupstart = Find-Bytes -all $levfile $b
 $groupsarray = @()
 $groupmethod = 1
 
+
+if ($groupstart -eq $null){ #Another header signature
+    $b = [byte[]] $another_array = 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E
+    $groupstart = Find-Bytes -all $levfile $b
+    $groupmethod = 1
+   }
+
 if ($groupstart -eq $null){ #Try second method, just relying on the first group containing "PLAYER"
     $b = [byte[]]("PLAYER".ToCharArray())
     $groupstart = Find-Bytes -all $levfile $b
@@ -137,10 +155,10 @@ if ($groupstart -eq $null){ #Try second method, just relying on the first group 
    }
 
 
+
 if ($groupstart -eq $null){   #Don't bother trying to find group names if none found - some level files don't have 'em
 Write-host "No group name header found in file"
 write-host ""
-
 }
 Else{
 
@@ -184,10 +202,6 @@ $Fileoutput = @()
 
 $fpos = 6
 
-#These filetypes have an extra 48 bytes of data at the top before the characters start 
-if ($filetype -eq 9 -or $filetype -eq 11 -or $filetype -eq 12){
-$fpos = $fpos + 48
-}
 
 DO
 {
@@ -279,6 +293,7 @@ $Stamina = convert16bitint $levfile[$fpos+160] $levfile[$fpos+161]
 $MaxStamina = convert16bitint $levfile[$fpos+162] $levfile[$fpos+163]
 $WeaponsCarried = convert32bitint $levfile[$fpos+164] $levfile[$fpos+165] $levfile[$fpos+166] $levfile[$fpos+167]
 $weaponscarried2 = $WeaponsCarried
+
 $weaponstext = $null
     if ($WeaponsCarried -ge 1){    
 
@@ -539,7 +554,12 @@ $CharacterEntry | Add-Member -type NoteProperty -Name 'Weapons Carried List' -Va
 $Fileoutput += $characterentry
 
 $charcount = $charcount - 1
-if ($state -eq 33 -OR $state -eq 61 -or $state -eq 64){  #Characters with these state values have an extra 36 bytes of data in their character definition. This seems to be where some vehicle data is stored. 33 = tank or car, 61 = car, 64 = ship
+
+if ($filetype -eq 9 -or $filetype -eq 11 -or $filetype -eq 12){
+$fpos = $fpos + 48
+}
+
+if ($state -eq 33 -OR $state -eq 61 -or $state -eq 64){  #Vehicles have these state values that use an extra 36 bytes of data in their character definition. This seems to be where some vehicle data is stored. 33 = tank or car, 61 = car, 64 = ship
 $fpos = $fpos + 36
 }
 
@@ -550,7 +570,7 @@ $fpos = $fpos + 168
 UNTIL ($charcount -eq 0)
 
 #Output to CSV
-$csvname = [io.path]::GetFileNameWithoutExtension("$filename")
+$csvname = [io.path]::GetFileName("$filename")
 
 $fileext = $csvname+".csv"
 write-host "Exporting to $fileext"
