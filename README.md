@@ -10,6 +10,8 @@ Features:
 * Lists all characters and vehicles in a level
 * Lists character's person type
 * Lists character's weapons (if any)
-* lists misc interesting data, including X/Y/Z position and Thing Type
+* Includes vehicle type (e.g. Yellow Taxi, Metallic Bike)
+* lists misc interesting data, including X/Y/Z position 
 * Lists all NPC groups and membership of them
-* Outputs to CSV file
+* Outputs Commands section with cross-referenced Group names and objectives to make NPC behaviour human-readable
+* Outputs to CSV files
