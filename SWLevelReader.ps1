@@ -1,7 +1,7 @@
 ﻿#Syndicate Wars Level Reader by Moburma
 
-#VERSION 0.3
-#LAST MODIFIED: 06/06/2022
+#VERSION 0.4
+#LAST MODIFIED: 11/06/2022
 
 <#
 .SYNOPSIS
@@ -107,6 +107,183 @@ switch ($chartype)
 }
 }
 
+
+function identifycommand($Commandtype){ #Returns what the command type name is
+
+Switch ($commandtype){  #PersonCommandType
+
+
+            0{ return 'NONE'}
+            1{ return 'STAY'}
+            2{ return 'GO_TO_POINT'}
+            3{ return 'GO_TO_PERSON'}
+            4{ return 'KILL_PERSON'}
+            5{ return 'KILL_MEM_GROUP'}
+            6{ return 'KILL_ALL_GROUP'}
+            7{ return 'PERSUADE_PERSON'}
+            8{ return 'PERSUADE_MEM_GROUP'}
+            9{ return 'PERSUADE_ALL_GROUP'}
+            10{ return 'BLOCK_PERSON'}
+            11{ return 'SCARE_PERSON'}
+            12{ return 'FOLLOW_PERSON'}
+            13{ return 'SUPPORT_PERSON'}
+            14{ return 'PROTECT_PERSON'}
+            15{ return 'HIDE'}
+            16{ return 'GET_ITEM'}
+            17{ return 'USE_WEAPON'}
+            18{ return 'DROP_SPEC_ITEM'}
+            19{ return 'AVOID_PERSON'}
+            20{ return 'WAND_AVOID_GROUP'}
+            21{ return 'DESTROY_BUILDING'}
+            22{ return '16'}
+            23{ return 'USE_VEHICLE'}
+            24{ return 'EXIT_VEHICLE'}
+            25{ return 'CATCH_TRAIN'}
+            26{ return 'OPEN_DOME'}
+            27{ return 'CLOSE_DOME'}
+            28{ return 'DROP_WEAPON'}
+            29{ return 'CATCH_FERRY'}
+            30{ return 'EXIT_FERRY'}
+            31{ return 'PING_EXIST'}
+            32{ return 'GOTOPOINT_FACE'}
+            33{ return 'SELF_DESTRUCT'}
+            34{ return 'PROTECT_MEM_G'}
+            35{ return 'RUN_TO_POINT'}
+            36{ return 'KILL_EVERYONE'}
+            37{ return 'GUARD_OFF'}
+            38{ return 'EXECUTE_COMS'}
+            39{ return '27'}
+            50{ return '32'}
+            51{ return 'WAIT_P_V_DEAD'}
+            52{ return 'WAIT_MEM_G_DEAD'}
+            53{ return 'WAIT_ALL_G_DEAD'}
+            54{ return 'WAIT_P_V_I_NEAR'}
+            55{ return 'WAIT_MEM_G_NEAR'}
+            56{ return 'WAIT_ALL_G_NEAR'}
+            57{ return 'WAIT_P_V_I_ARRIVES'}
+            58{ return 'WAIT_MEM_G_ARRIVE'}
+            59{ return 'WAIT_ALL_G_ARRIVE'}
+            60{ return 'WAIT_P_PERSUADED'}
+            61{ return 'WAIT_MEM_G_PERSUADED'}
+            62{ return 'WAIT_ALL_G_PERSUADED'}
+            63{ return 'WAIT_MISSION_SUCC'}
+            64{ return 'WAIT_MISSION_FAIL'}
+            65{ return 'WAIT_MISSION_START'}
+            66{ return 'WAIT_OBJECT_DESTROYED'}
+            67{ return 'WAIT_TIME'}
+            71{ return 'WAND_P_V_DEAD'}
+            72{ return 'WAND_MEM_G_DEAD'}
+            73{ return 'WAND_ALL_G_DEAD'}
+            74{ return 'WAND_P_V_I_NEAR'}
+            75{ return 'WAND_MEM_G_NEAR'}
+            76{ return 'WAND_ALL_G_NEAR'}
+            77{ return 'WAND_P_V_I_ARRIVES'}
+            78{ return 'WAND_MEM_G_ARRIVE'}
+            79{ return 'WAND_ALL_G_ARRIVE'}
+            80{ return 'WAND_P_PERSUADED'}
+            81{ return 'WAND_MEM_G_PERSUADED'}
+            82{ return 'WAND_ALL_G_PERSUADED'}
+            83{ return 'WAND_MISSION_SUCC'}
+            84{ return 'WAND_MISSION_FAIL'}
+            85{ return 'WAND_MISSION_START'}
+            86{ return 'WAND_OBJECT_DESTROYED'}
+            87{ return 'WAND_TIME'}
+            110{ return 'LOOP_COM'}
+            111{ return 'UNTIL_P_V_DEAD'}
+            112{ return 'UNTIL_MEM_G_DEAD'}
+            113{ return 'UNTIL_ALL_G_DEAD'}
+            114{ return 'UNTIL_P_V_I_NEAR'}
+            115{ return 'UNTIL_MEM_G_NEAR'}
+            116{ return 'UNTIL_ALL_G_NEAR'}
+            117{ return 'UNTIL_P_V_I_ARRIVES'}
+            118{ return 'UNTIL_MEM_G_ARRIVE'}
+            119{ return 'UNTIL_ALL_G_ARRIVE'}
+            120{ return 'UNTIL_P_PERSUADED'}
+            121{ return 'UNTIL_MEM_G_PERSUADED'}
+            122{ return 'UNTIL_ALL_G_PERSUADED'}
+            123{ return 'UNTIL_MISSION_SUCC'}
+            124{ return 'UNTIL_MISSION_FAIL'}
+            125{ return 'UNTIL_MISSION_START'}
+            126{ return 'UNTIL_OBJECT_DESTROYED'}
+            127{ return 'UNTIL_TIME'}
+            128{ return 'WAIT_OBJ'}
+            129{ return 'WAND_OBJ'}
+            130{ return 'UNTIL_OBJ'}
+            131{ return 'WITHIN_AREA'}
+            132{ return 'WITHIN_OFF'}
+            133{ return 'LOCK_BUILD'}
+            134{ return 'UNLOCK_BUILD'}
+            135{ return 'SELECT_WEAPON'}
+            136{ return 'HARD_AS_AGENT'}
+            137{ return 'UNTIL_G_NOT_SEEN'}
+            138{ return 'START_DANGER_MUSIC'}
+            139{ return 'PING_P_V'}
+            140{ return 'CAMERA_TRACK'}
+            141{ return 'UNTRUCE_GROUP'}
+            142{ return 'PLAY_SAMPLE'}
+            143{ return 'IGNORE_ENEMIES'}
+            144{ return '90'}
+            145{ return '91'}
+
+
+
+}
+
+
+}
+
+
+function identifyvehicle ($vehicletype){ #Returns what the vehicle type name is based on startframe
+
+Switch ($vehicletype) {
+
+            0{ return 'Civilian car (grey)'}
+            1{ return 'Delorean (grey)'}
+            2{ return 'Bike'}
+            3{ return 'Brown flyer'}
+            4{ return 'Train engine'}
+            5{ return 'Train carriage'}
+            6{ return 'APC'}
+            7{ return 'Large APC'}
+            8{ return 'Police car'}
+            9{ return 'Police Truck'}
+            10{ return 'Small industrial vehicle'}
+            11{ return 'Bullfrog truck'}
+            12{ return 'Fire  truck'}
+            13{ return 'Ambulance'}
+            14{ return 'Taxi (Yellow)'}
+            15{ return 'Barge'}
+            16{ return 'Missile Frigate'}
+            17{ return 'Luxury Yacht'}
+            18{ return 'Tank'}
+            19{ return 'Tank missile battery?'}
+            20{ return 'Missile (small)'}
+            21{ return 'Civilian car (Red)'}
+            22{ return 'Delorean (Yellow)'}
+            23{ return 'Zealot Imperial Shuttle'}
+            24{ return 'Taxi (Red)'}
+            25{ return 'Missile (Large)'}
+            26{ return 'Head of moon Mech'}
+            27{ return 'Chest of mech?'}
+            28{ return 'Bike (Metallic)'}
+            29{ return 'Claw Mech (black)'}
+            30{ return 'Claw Mech (Red)'}
+            31{ return '2000AD/Manga Truck'}
+            32{ return 'Moon Mech leg'}
+            33{ return 'Moon Mech leg'}
+            34{ return 'Moon Mech leg'}
+            35{ return 'Moon Mech leg'}
+            36{ return 'Moon Mech Arm'}
+            37{ return 'Moon Mech Arm'}
+            38{ return 'Moon Mech Gun'}
+            39{ return 'Moon Mech Gun'}
+
+
+
+}
+}
+
+
 $counter = 0
 
 #Check File type
@@ -152,7 +329,16 @@ if ($groupstart -eq $null){ #Try second method, just relying on the first group 
     $b = [byte[]]("PLAYER".ToCharArray())
     $groupstart = Find-Bytes -all $levfile $b
     $groupmethod = 2
+    echo $groupstart
    }
+
+if ($groupstart -eq $null){ #Try second method, just relying on the first group containing "AGENT"
+    $b = [byte[]]("AGENT".ToCharArray())
+    $groupstart = Find-Bytes -all $levfile $b
+    $groupmethod = 3
+    
+    $groupstart = $groupstart[0]
+    }
 
 
 
@@ -190,13 +376,13 @@ DO{   #Extract all Group names
     
    # echo "group had no text"
     $estring = 1
-    } #>
+    } 
     
 }
 UNTIL ($estring -eq 1) 
 }
 
-write-host "Char No, Char type, Character Name, Thing Type, Weapons Carried Number, Weapons Carried List, Group No, Group Name, Effective Group, State, Map Position (X, Y, Z), MaxEnergy"   #console headers
+write-host "Char No, Char type, Character Name, Thing Type, Vehicle Type, Weapons Carried Number, Weapons Carried List, Group No, Group Name, Effective Group, State, Map Position (X, Y, Z), MaxEnergy"   #console headers
 $Fileoutput = @()
 
 
@@ -208,6 +394,44 @@ DO
 
 $counter = $counter +1
 
+
+if ($filetype -eq 9 -or $filetype -eq 11 -or $filetype -eq 12){  #scan for extended data in old files first
+$Person1 = convert16bitint $levfile[$fpos+169] $levfile[$fpos+170]
+$Person2 = convert16bitint $levfile[$fpos+171] $levfile[$fpos+172]
+$Person3 = convert16bitint $levfile[$fpos+173] $levfile[$fpos+174]
+
+
+$person4 = convert32bitint $levfile[$fpos+176] $levfile[$fpos+177] $levfile[$fpos+178] $levfile[$fpos+179]
+$person11 = convert16bitint $levfile[$fpos+190] $levfile[$fpos+191] 
+
+
+
+$Person7 = convert16bitint $levfile[$fpos+181] $levfile[$fpos+182]
+$Person8 = convert16bitint $levfile[$fpos+183] $levfile[$fpos+184]
+$Person9 = convert16bitint $levfile[$fpos+185] $levfile[$fpos+186]
+$Person10 = convert16bitint $levfile[$fpos+187] $levfile[$fpos+188]
+
+$Person13 = convert16bitint $levfile[$fpos+193] $levfile[$fpos+194]
+$Person14 = convert16bitint $levfile[$fpos+195] $levfile[$fpos+196]
+$Person15 = convert16bitint $levfile[$fpos+197] $levfile[$fpos+198]
+$Person16 = convert16bitint $levfile[$fpos+199] $levfile[$fpos+200]
+$Person17 = convert16bitint $levfile[$fpos+201] $levfile[$fpos+202]
+$Person18 = convert16bitint $levfile[$fpos+203] $levfile[$fpos+204]
+$Person19 = convert16bitint $levfile[$fpos+203] $levfile[$fpos+204]
+$Person20 = convert16bitint $levfile[$fpos+203] $levfile[$fpos+204]
+$Person21 = convert16bitint $levfile[$fpos+203] $levfile[$fpos+204]
+$Person22 = convert16bitint $levfile[$fpos+203] $levfile[$fpos+204]
+$Person23 = convert16bitint $levfile[$fpos+205] $levfile[$fpos+206]
+$Person24 = convert16bitint $levfile[$fpos+207] $levfile[$fpos+208]
+$Person25 = convert16bitint $levfile[$fpos+209] $levfile[$fpos+210]
+$Person26 = convert16bitint $levfile[$fpos+211] $levfile[$fpos+212]
+$Person27 = convert16bitint $levfile[$fpos+213] $levfile[$fpos+214]
+$Person28 = convert16bitint $levfile[$fpos+215] $levfile[$fpos+216]
+
+}
+
+#echo $fpos
+
 $Parent =  convert16bitint $levfile[$fpos] $levfile[$fpos+1]
 $Next =  convert16bitint $levfile[$fpos+2] $levfile[$fpos+3]
 $LinkParent = convert16bitint $levfile[$fpos+4] $levfile[$fpos+5]
@@ -215,6 +439,7 @@ $LinkChild =  convert16bitint $levfile[$fpos+6] $levfile[$fpos+7]
 $type = $levfile[$fpos+8]
 $charactername = identifycharacter $type
 $thingtype = $levfile[$fpos+9]
+
 $state = convert16bitint $levfile[$fpos+10] $levfile[$fpos+11]
 $Flag =  convert32bitint $levfile[$fpos+12] $levfile[$fpos+13] $levfile[$fpos+14] $levfile[$fpos+15]
 $LinkSame = convert16bitint $levfile[$fpos+16] $levfile[$fpos+17]
@@ -291,11 +516,22 @@ $GotoZ = convert16bitint $levfile[$fpos+156] $levfile[$fpos+157]
 $TempWeapon = convert16bitint $levfile[$fpos+158] $levfile[$fpos+159]
 $Stamina = convert16bitint $levfile[$fpos+160] $levfile[$fpos+161]
 $MaxStamina = convert16bitint $levfile[$fpos+162] $levfile[$fpos+163]
+
+if($type -eq 40 -or $type -eq 50 -or $type -eq 51 -or $type -eq 54 ){
+$vehicletype = identifyvehicle $startframe
+}
+Else{
+$vehicletype = "N/A"
+}
+
+
+if ($filetype -gt 12){
 $WeaponsCarried = convert32bitint $levfile[$fpos+164] $levfile[$fpos+165] $levfile[$fpos+166] $levfile[$fpos+167]
 $weaponscarried2 = $WeaponsCarried
-
+}
 $weaponstext = $null
     if ($WeaponsCarried -ge 1){    
+       
 
          		if ($WeaponsCarried / 2147483648 -ge 1) {
                     $WeaponsCarried = $WeaponsCarried % 2147483648
@@ -457,9 +693,34 @@ $weaponstext = $null
         $weaponstext ="Unarmed"
         }
 
+if ($state -eq 33 -OR $state -eq 61 -or $state -eq 64){  #Vehicles data
+
+$vehicles1 = convert16bitint $levfile[$fpos+169] $levfile[$fpos+170]
+$vehicles2 = convert16bitint $levfile[$fpos+171] $levfile[$fpos+172]
+$vehicles3 = convert16bitint $levfile[$fpos+173] $levfile[$fpos+174]
+$vehicles4 = convert16bitint $levfile[$fpos+175] $levfile[$fpos+176]
+$vehicles5 = convert16bitint $levfile[$fpos+177] $levfile[$fpos+178]
+$vehicles6 = convert16bitint $levfile[$fpos+179] $levfile[$fpos+180]
+$vehicles7 = convert16bitint $levfile[$fpos+181] $levfile[$fpos+182]
+$vehicles8 = convert16bitint $levfile[$fpos+183] $levfile[$fpos+184]
+$vehicles9 = convert16bitint $levfile[$fpos+185] $levfile[$fpos+186]
+$vehicles10 = convert16bitint $levfile[$fpos+187] $levfile[$fpos+188]
+$vehicles11 = convert16bitint $levfile[$fpos+189] $levfile[$fpos+190]
+$vehicles12 = convert16bitint $levfile[$fpos+191] $levfile[$fpos+192]
+$vehicles13 = convert16bitint $levfile[$fpos+193] $levfile[$fpos+194]
+$vehicles14 = convert16bitint $levfile[$fpos+195] $levfile[$fpos+196]
+$vehicles15 = convert16bitint $levfile[$fpos+197] $levfile[$fpos+198]
+$vehicles16 = convert16bitint $levfile[$fpos+199] $levfile[$fpos+200]
+$vehicles17 = convert16bitint $levfile[$fpos+201] $levfile[$fpos+202]
+$vehicles18 = convert16bitint $levfile[$fpos+203] $levfile[$fpos+204]
+}
+
+
+
+
 #Output to console
 
-$consoleoutput = "$counter, $type, $charactername, $thingtype, $WeaponsCarried2, $weaponstext, $group, $GroupName, $EffectiveGroup, $state, ($map_posx, $map_posy, $map_posz), $maxenergy" 
+$consoleoutput = "$counter, $type, $charactername, $thingtype, $vehicletype, $WeaponsCarried2, $weaponstext, $group, $GroupName, $EffectiveGroup, $state, ($map_posx, $map_posy, $map_posz), $maxenergy" 
 write-host $consoleoutput
 
 #output toarray to output CSV file 
@@ -473,6 +734,7 @@ $CharacterEntry | Add-Member -type NoteProperty -Name 'Link Child' -Value $LinkC
 $CharacterEntry | Add-Member -type NoteProperty -Name 'Character Type' -Value $type
 $CharacterEntry | Add-Member -type NoteProperty -Name 'Character Name' -Value $charactername
 $CharacterEntry | Add-Member -type NoteProperty -Name 'Thing Type' -Value $thingtype
+$CharacterEntry | Add-Member -type NoteProperty -Name 'Vehicle Type' -Value $vehicletype
 $CharacterEntry | Add-Member -type NoteProperty -Name 'State' -Value $state
 $CharacterEntry | Add-Member -type NoteProperty -Name 'Flag' -Value $flag
 $CharacterEntry | Add-Member -type NoteProperty -Name 'LinkSame' -Value $LinkSame
@@ -550,6 +812,56 @@ $CharacterEntry | Add-Member -type NoteProperty -Name 'Stamina' -Value $Stamina
 $CharacterEntry | Add-Member -type NoteProperty -Name 'MaxStamina' -Value $MaxStamina
 $CharacterEntry | Add-Member -type NoteProperty -Name 'Weapons Carried Value' -Value $WeaponsCarried2
 $CharacterEntry | Add-Member -type NoteProperty -Name 'Weapons Carried List' -Value $weaponstext.Trim()
+$CharacterEntry | Add-Member -type NoteProperty -Name 'vehicles1'  -Value $vehicles1
+$CharacterEntry | Add-Member -type NoteProperty -Name 'vehicles2'  -Value $vehicles2
+$CharacterEntry | Add-Member -type NoteProperty -Name 'vehicles3'  -Value $vehicles3
+$CharacterEntry | Add-Member -type NoteProperty -Name 'vehicles4'  -Value $vehicles4
+$CharacterEntry | Add-Member -type NoteProperty -Name 'vehicles5'  -Value $vehicles5
+$CharacterEntry | Add-Member -type NoteProperty -Name 'vehicles6'  -Value $vehicles6
+$CharacterEntry | Add-Member -type NoteProperty -Name 'vehicles7'  -Value $vehicles7
+$CharacterEntry | Add-Member -type NoteProperty -Name 'vehicles8'  -Value $vehicles8
+$CharacterEntry | Add-Member -type NoteProperty -Name 'vehicles9'  -Value $vehicles9
+$CharacterEntry | Add-Member -type NoteProperty -Name 'vehicles10'  -Value $vehicles10
+$CharacterEntry | Add-Member -type NoteProperty -Name 'vehicles11'  -Value $vehicles11
+$CharacterEntry | Add-Member -type NoteProperty -Name 'vehicles12'  -Value $vehicles12
+$CharacterEntry | Add-Member -type NoteProperty -Name 'vehicles13'  -Value $vehicles13
+$CharacterEntry | Add-Member -type NoteProperty -Name 'vehicles14'  -Value $vehicles14
+$CharacterEntry | Add-Member -type NoteProperty -Name 'vehicles15'  -Value $vehicles15
+$CharacterEntry | Add-Member -type NoteProperty -Name 'vehicles16'  -Value $vehicles16
+$CharacterEntry | Add-Member -type NoteProperty -Name 'vehicles17'  -Value $vehicles17
+$CharacterEntry | Add-Member -type NoteProperty -Name 'vehicles18'  -Value $vehicles18
+
+if ($filetype -eq 9 -or $filetype -eq 11 -or $filetype -eq 12){
+$CharacterEntry | Add-Member -type NoteProperty -Name 'Person1' -Value $Person1
+$CharacterEntry | Add-Member -type NoteProperty -Name 'Person2' -Value $Person2
+$CharacterEntry | Add-Member -type NoteProperty -Name 'Person3' -Value $Person3
+$CharacterEntry | Add-Member -type NoteProperty -Name 'Person4' -Value $Person4
+$CharacterEntry | Add-Member -type NoteProperty -Name 'Person5' -Value $Person5
+$CharacterEntry | Add-Member -type NoteProperty -Name 'Person6' -Value $Person6
+$CharacterEntry | Add-Member -type NoteProperty -Name 'Person7' -Value $Person7
+$CharacterEntry | Add-Member -type NoteProperty -Name 'Person8' -Value $Person8
+$CharacterEntry | Add-Member -type NoteProperty -Name 'Person9' -Value $Person9
+$CharacterEntry | Add-Member -type NoteProperty -Name 'Person10' -Value $Person10
+$CharacterEntry | Add-Member -type NoteProperty -Name 'Person11' -Value $Person11
+$CharacterEntry | Add-Member -type NoteProperty -Name 'Person12' -Value $Person12
+$CharacterEntry | Add-Member -type NoteProperty -Name 'Person13' -Value $Person13
+$CharacterEntry | Add-Member -type NoteProperty -Name 'Person14' -Value $Person14
+$CharacterEntry | Add-Member -type NoteProperty -Name 'Person15' -Value $Person15
+$CharacterEntry | Add-Member -type NoteProperty -Name 'Person16' -Value $Person16
+$CharacterEntry | Add-Member -type NoteProperty -Name 'Person17' -Value $Person17
+$CharacterEntry | Add-Member -type NoteProperty -Name 'Person18' -Value $Person18
+$CharacterEntry | Add-Member -type NoteProperty -Name 'Person19' -Value $Person19
+$CharacterEntry | Add-Member -type NoteProperty -Name 'Person20' -Value $Person20
+$CharacterEntry | Add-Member -type NoteProperty -Name 'Person21' -Value $Person21
+$CharacterEntry | Add-Member -type NoteProperty -Name 'Person22' -Value $Person22
+$CharacterEntry | Add-Member -type NoteProperty -Name 'Person23' -Value $Person23
+$CharacterEntry | Add-Member -type NoteProperty -Name 'Person24' -Value $Person24
+$CharacterEntry | Add-Member -type NoteProperty -Name 'Person25' -Value $Person25
+$CharacterEntry | Add-Member -type NoteProperty -Name 'Person26' -Value $Person26
+$CharacterEntry | Add-Member -type NoteProperty -Name 'Person27' -Value $Person27
+$CharacterEntry | Add-Member -type NoteProperty -Name 'Person28' -Value $Person28
+}
+
 
 $Fileoutput += $characterentry
 
@@ -559,7 +871,7 @@ if ($filetype -eq 9 -or $filetype -eq 11 -or $filetype -eq 12){
 $fpos = $fpos + 48
 }
 
-if ($state -eq 33 -OR $state -eq 61 -or $state -eq 64){  #Vehicles have these state values that use an extra 36 bytes of data in their character definition. This seems to be where some vehicle data is stored. 33 = tank or car, 61 = car, 64 = ship
+if ($state -eq 33 -OR $state -eq 61 -or $state -eq 64){  #Vehicles have these state values that correspond with an extra 36 bytes of data in their character definition. This seems to be where some vehicle data is stored. 33 = tank or car, 61 = car, 64 = ship
 $fpos = $fpos + 36
 }
 
@@ -572,9 +884,88 @@ UNTIL ($charcount -eq 0)
 #Output to CSV
 $csvname = [io.path]::GetFileName("$filename")
 
-$fileext = $csvname+".csv"
+$fileext = $csvname+"Characters.csv"
 write-host "Exporting to $fileext"
 
 $Fileoutput | export-csv -NoTypeInformation $fileext
 
+#commands
+
+$commandcount = convert16bitint $levfile[$fpos] $levfile[$fpos+1] #Read command count header number
+
+write-host ""
+write-host "File has $commandcount unit commands"
+
+
+
+
+
+$commandoutput = @()
+
+$fpos = $fpos+2
+DO
+{
+$commandcount = $commandcount -1
+
+$Next = convert16bitint $levfile[$fpos] $levfile[$fpos+1]
+$OtherThing = convert16bitint $levfile[$fpos+2] $levfile[$fpos+3]
+$X = convert16bitint $levfile[$fpos+4] $levfile[$fpos+5]
+$Y = convert16bitint $levfile[$fpos+6] $levfile[$fpos+7]
+$Z = convert16bitint $levfile[$fpos+8] $levfile[$fpos+9]
+$Type = $levfile[$fpos+10]
+$CommandName = identifycommand ($type)
+$SubType = $levfile[$fpos+11]
+$Arg1 = convert16bitint $levfile[$fpos+12] $levfile[$fpos+13]
+$Arg2 = convert16bitint $levfile[$fpos+14] $levfile[$fpos+15]
+$Time = convert16bitint $levfile[$fpos+16] $levfile[$fpos+17]
+$MyThing = convert16bitint $levfile[$fpos+18] $levfile[$fpos+19]
+$Parent = convert16bitint $levfile[$fpos+20] $levfile[$fpos+21]
+$Flags = convert32bitint $levfile[$fpos+22] $levfile[$fpos+23] $levfile[$fpos+24] $levfile[$fpos+25]
+$Field_1A = convert32bitint $levfile[$fpos+26] $levfile[$fpos+27] $levfile[$fpos+28] $levfile[$fpos+29]
+$Field_1E = convert16bitint $levfile[$fpos+30] $levfile[$fpos+31]
+if ($otherthing -lt 20 -and $commandname -like "KILL*" -or  $commandname -like "*DEAD" -or $commandname -like "*MEM_G*"   ){
+$OtherThingName = $groupsarray[$otherthing]
 }
+Else{
+$OtherThingName = ""
+}
+
+
+
+$CommandEntry = New-Object PSObject
+$CommandEntry | Add-Member -type NoteProperty -Name 'Next' -Value $Next
+$CommandEntry | Add-Member -type NoteProperty -Name 'OtherThing' -Value $OtherThing
+$CommandEntry | Add-Member -type NoteProperty -Name 'OtherThingName' -Value $OtherThingname
+$CommandEntry | Add-Member -type NoteProperty -Name 'X' -Value $X
+$CommandEntry | Add-Member -type NoteProperty -Name 'Y' -Value $Y
+$CommandEntry | Add-Member -type NoteProperty -Name 'Z' -Value $Z
+$CommandEntry | Add-Member -type NoteProperty -Name 'Type' -Value $Type
+$CommandEntry | Add-Member -type NoteProperty -Name 'CommandName' -Value $CommandName
+$CommandEntry | Add-Member -type NoteProperty -Name 'SubType' -Value $SubType
+$CommandEntry | Add-Member -type NoteProperty -Name 'Arg1' -Value $Arg1
+$CommandEntry | Add-Member -type NoteProperty -Name 'Arg2' -Value $Arg2
+$CommandEntry | Add-Member -type NoteProperty -Name 'Time' -Value $Time
+$CommandEntry | Add-Member -type NoteProperty -Name 'MyThing' -Value $MyThing
+$CommandEntry | Add-Member -type NoteProperty -Name 'Parent' -Value $Parent
+$CommandEntry | Add-Member -type NoteProperty -Name 'Flags' -Value $Flags
+$CommandEntry | Add-Member -type NoteProperty -Name 'field_1A' -Value $field_1A
+$CommandEntry | Add-Member -type NoteProperty -Name 'field_1E' -Value $field_1E
+
+
+
+$Commandoutput += $CommandEntry
+
+$fpos = $fpos+32
+
+}
+UNTIL ($commandcount -eq 0)
+echo $fpos
+$fileext = $csvname+"Commands.csv"
+write-host "Exporting to $fileext"
+
+$commandoutput | export-csv -NoTypeInformation $fileext
+
+
+
+}
+
