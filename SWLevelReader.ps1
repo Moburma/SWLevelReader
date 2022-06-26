@@ -1,7 +1,7 @@
 ﻿#Syndicate Wars Level Reader by Moburma
 
-#VERSION 0.4
-#LAST MODIFIED: 11/06/2022
+#VERSION 0.5
+#LAST MODIFIED: 26/06/2022
 
 <#
 .SYNOPSIS
@@ -248,8 +248,8 @@ Switch ($vehicletype) {
             8{ return 'Police car'}
             9{ return 'Police Truck'}
             10{ return 'Small industrial vehicle'}
-            11{ return 'Bullfrog truck'}
-            12{ return 'Fire  truck'}
+            11{ return 'Bullfrog Van'}
+            12{ return 'Fire  Engine'}
             13{ return 'Ambulance'}
             14{ return 'Taxi (Yellow)'}
             15{ return 'Barge'}
@@ -361,9 +361,8 @@ write-host "Group Names Found:"
 
 DO{   #Extract all Group names
     
-    $groupbytes = [System.IO.File]::ReadAllBytes("$filename")
     # Decode 40 bytes to text assuming ASCII encoding.
-    $gtext = [System.Text.Encoding]::ASCII.GetString($groupbytes, $gpos, 40)
+    $gtext = [System.Text.Encoding]::ASCII.GetString($levfile, $gpos, 40)
     
     write-host $gtext 
     if ($gtext -match "[a-z]"){   #We don't know when groups end in the file, so look for the first blank entry to end on
@@ -394,42 +393,6 @@ DO
 
 $counter = $counter +1
 
-
-if ($filetype -eq 9 -or $filetype -eq 11 -or $filetype -eq 12){  #scan for extended data in old files first
-$Person1 = convert16bitint $levfile[$fpos+169] $levfile[$fpos+170]
-$Person2 = convert16bitint $levfile[$fpos+171] $levfile[$fpos+172]
-$Person3 = convert16bitint $levfile[$fpos+173] $levfile[$fpos+174]
-
-
-$person4 = convert32bitint $levfile[$fpos+176] $levfile[$fpos+177] $levfile[$fpos+178] $levfile[$fpos+179]
-$person11 = convert16bitint $levfile[$fpos+190] $levfile[$fpos+191] 
-
-
-
-$Person7 = convert16bitint $levfile[$fpos+181] $levfile[$fpos+182]
-$Person8 = convert16bitint $levfile[$fpos+183] $levfile[$fpos+184]
-$Person9 = convert16bitint $levfile[$fpos+185] $levfile[$fpos+186]
-$Person10 = convert16bitint $levfile[$fpos+187] $levfile[$fpos+188]
-
-$Person13 = convert16bitint $levfile[$fpos+193] $levfile[$fpos+194]
-$Person14 = convert16bitint $levfile[$fpos+195] $levfile[$fpos+196]
-$Person15 = convert16bitint $levfile[$fpos+197] $levfile[$fpos+198]
-$Person16 = convert16bitint $levfile[$fpos+199] $levfile[$fpos+200]
-$Person17 = convert16bitint $levfile[$fpos+201] $levfile[$fpos+202]
-$Person18 = convert16bitint $levfile[$fpos+203] $levfile[$fpos+204]
-$Person19 = convert16bitint $levfile[$fpos+203] $levfile[$fpos+204]
-$Person20 = convert16bitint $levfile[$fpos+203] $levfile[$fpos+204]
-$Person21 = convert16bitint $levfile[$fpos+203] $levfile[$fpos+204]
-$Person22 = convert16bitint $levfile[$fpos+203] $levfile[$fpos+204]
-$Person23 = convert16bitint $levfile[$fpos+205] $levfile[$fpos+206]
-$Person24 = convert16bitint $levfile[$fpos+207] $levfile[$fpos+208]
-$Person25 = convert16bitint $levfile[$fpos+209] $levfile[$fpos+210]
-$Person26 = convert16bitint $levfile[$fpos+211] $levfile[$fpos+212]
-$Person27 = convert16bitint $levfile[$fpos+213] $levfile[$fpos+214]
-$Person28 = convert16bitint $levfile[$fpos+215] $levfile[$fpos+216]
-
-}
-
 #echo $fpos
 
 $Parent =  convert16bitint $levfile[$fpos] $levfile[$fpos+1]
@@ -439,7 +402,6 @@ $LinkChild =  convert16bitint $levfile[$fpos+6] $levfile[$fpos+7]
 $type = $levfile[$fpos+8]
 $charactername = identifycharacter $type
 $thingtype = $levfile[$fpos+9]
-
 $state = convert16bitint $levfile[$fpos+10] $levfile[$fpos+11]
 $Flag =  convert32bitint $levfile[$fpos+12] $levfile[$fpos+13] $levfile[$fpos+14] $levfile[$fpos+15]
 $LinkSame = convert16bitint $levfile[$fpos+16] $levfile[$fpos+17]
@@ -491,7 +453,7 @@ $OldAnimMode = $levfile[$fpos+109]
 $OnFace = convert16bitint $levfile[$fpos+110] $levfile[$fpos+111]
 $UMod = convert16bitint $levfile[$fpos+112] $levfile[$fpos+113]
 $Mood = convert16bitint $levfile[$fpos+114] $levfile[$fpos+115]
-$FrameId 
+$FrameId = convert32bitint $levfile[$fpos+116] $levfile[$fpos+117] $levfile[$fpos+118] $levfile[$fpos+119] $levfile[$fpos+120]
 $Shadows = convert32bitint $levfile[$fpos+121] $levfile[$fpos+122] $levfile[$fpos+123] $levfile[$fpos+124]
 $RecoilTimer = $levfile[$fpos+125]
 $MaxHealth = convert16bitint $levfile[$fpos+126] $levfile[$fpos+127]
@@ -695,27 +657,58 @@ $weaponstext = $null
 
 if ($state -eq 33 -OR $state -eq 61 -or $state -eq 64){  #Vehicles data
 
-$vehicles1 = convert16bitint $levfile[$fpos+169] $levfile[$fpos+170]
-$vehicles2 = convert16bitint $levfile[$fpos+171] $levfile[$fpos+172]
-$vehicles3 = convert16bitint $levfile[$fpos+173] $levfile[$fpos+174]
-$vehicles4 = convert16bitint $levfile[$fpos+175] $levfile[$fpos+176]
-$vehicles5 = convert16bitint $levfile[$fpos+177] $levfile[$fpos+178]
-$vehicles6 = convert16bitint $levfile[$fpos+179] $levfile[$fpos+180]
-$vehicles7 = convert16bitint $levfile[$fpos+181] $levfile[$fpos+182]
-$vehicles8 = convert16bitint $levfile[$fpos+183] $levfile[$fpos+184]
-$vehicles9 = convert16bitint $levfile[$fpos+185] $levfile[$fpos+186]
-$vehicles10 = convert16bitint $levfile[$fpos+187] $levfile[$fpos+188]
-$vehicles11 = convert16bitint $levfile[$fpos+189] $levfile[$fpos+190]
-$vehicles12 = convert16bitint $levfile[$fpos+191] $levfile[$fpos+192]
-$vehicles13 = convert16bitint $levfile[$fpos+193] $levfile[$fpos+194]
-$vehicles14 = convert16bitint $levfile[$fpos+195] $levfile[$fpos+196]
-$vehicles15 = convert16bitint $levfile[$fpos+197] $levfile[$fpos+198]
-$vehicles16 = convert16bitint $levfile[$fpos+199] $levfile[$fpos+200]
-$vehicles17 = convert16bitint $levfile[$fpos+201] $levfile[$fpos+202]
-$vehicles18 = convert16bitint $levfile[$fpos+203] $levfile[$fpos+204]
+$ObjectWidth = convert32bitint $levfile[$fpos+168] $levfile[$fpos+169] $levfile[$fpos+170] $levfile[$fpos+171]  #Default is normally 0400      
+$Objectskewleft = convert32bitint $levfile[$fpos+172] $levfile[$fpos+173] $levfile[$fpos+174] $levfile[$fpos+175] 
+$Objectskewright = convert32bitint $levfile[$fpos+176] $levfile[$fpos+177] $levfile[$fpos+178] $levfile[$fpos+179] 
+$ObjectRoll = convert32bitint $levfile[$fpos+180] $levfile[$fpos+181] $levfile[$fpos+182] $levfile[$fpos+183] 
+$ObjectHeight = convert32bitint $levfile[$fpos+184] $levfile[$fpos+185] $levfile[$fpos+186] $levfile[$fpos+187] #Default is normally 0400 
+$ObjectPitch = convert32bitint $levfile[$fpos+188] $levfile[$fpos+189] $levfile[$fpos+190] $levfile[$fpos+191]
+$ObjectSkew2 = convert32bitint $levfile[$fpos+192] $levfile[$fpos+193] $levfile[$fpos+194] $levfile[$fpos+195]
+$ObjectStretch = convert32bitint $levfile[$fpos+196] $levfile[$fpos+197] $levfile[$fpos+198] $levfile[$fpos+199]
+$ObjectLength = convert32bitint $levfile[$fpos+200] $levfile[$fpos+201] $levfile[$fpos+201] $levfile[$fpos+203] #Default is normally 0400 
+
+
+$fpos = $fpos +36
 }
 
 
+if ($filetype -eq 9 -or $filetype -eq 11 -or $filetype -eq 12){  #scan for extended data in old files first
+$Person1 = convert32bitint $levfile[$fpos+168] $levfile[$fpos+169] $levfile[$fpos+170] $levfile[$fpos+171]  
+#$Person2 = convert16bitint $levfile[$fpos+171] $levfile[$fpos+172]
+$Person3 = convert16bitint $levfile[$fpos+172] $levfile[$fpos+173]
+
+
+$person4 = convert32bitint $levfile[$fpos+174] $levfile[$fpos+175] 
+$person5 = convert32bitint $levfile[$fpos+176] $levfile[$fpos+177]
+$person6 = convert32bitint $levfile[$fpos+178] $levfile[$fpos+179]
+
+$person11 = convert16bitint $levfile[$fpos+190] $levfile[$fpos+191] 
+
+
+
+$Person7 = convert16bitint $levfile[$fpos+181] $levfile[$fpos+182]
+$Person8 = convert16bitint $levfile[$fpos+183] $levfile[$fpos+184]
+$Person9 = convert16bitint $levfile[$fpos+185] $levfile[$fpos+186]
+$Person10 = convert16bitint $levfile[$fpos+187] $levfile[$fpos+188]
+
+$Person13 = convert16bitint $levfile[$fpos+193] $levfile[$fpos+194]
+$Person14 = convert16bitint $levfile[$fpos+195] $levfile[$fpos+196]
+$Person15 = convert16bitint $levfile[$fpos+197] $levfile[$fpos+198]
+$Person16 = convert16bitint $levfile[$fpos+199] $levfile[$fpos+200]
+$Person17 = convert16bitint $levfile[$fpos+201] $levfile[$fpos+202]
+$Person18 = convert16bitint $levfile[$fpos+203] $levfile[$fpos+204]
+$Person19 = convert16bitint $levfile[$fpos+203] $levfile[$fpos+204]
+$Person20 = convert16bitint $levfile[$fpos+203] $levfile[$fpos+204]
+$Person21 = convert16bitint $levfile[$fpos+203] $levfile[$fpos+204]
+$Person22 = convert16bitint $levfile[$fpos+203] $levfile[$fpos+204]
+$Person23 = convert32bitint $levfile[$fpos+205] $levfile[$fpos+206] $levfile[$fpos+207] $levfile[$fpos+208]
+#$Person24 = convert16bitint $levfile[$fpos+207] $levfile[$fpos+208]
+$Person25 = convert16bitint $levfile[$fpos+209] $levfile[$fpos+210]
+$Person26 = convert16bitint $levfile[$fpos+211] $levfile[$fpos+212]
+
+$Person27 = convert32bitint $levfile[$fpos+212] $levfile[$fpos+213] $levfile[$fpos+214] $levfile[$fpos+215]
+
+}
 
 
 #Output to console
@@ -812,24 +805,20 @@ $CharacterEntry | Add-Member -type NoteProperty -Name 'Stamina' -Value $Stamina
 $CharacterEntry | Add-Member -type NoteProperty -Name 'MaxStamina' -Value $MaxStamina
 $CharacterEntry | Add-Member -type NoteProperty -Name 'Weapons Carried Value' -Value $WeaponsCarried2
 $CharacterEntry | Add-Member -type NoteProperty -Name 'Weapons Carried List' -Value $weaponstext.Trim()
-$CharacterEntry | Add-Member -type NoteProperty -Name 'vehicles1'  -Value $vehicles1
-$CharacterEntry | Add-Member -type NoteProperty -Name 'vehicles2'  -Value $vehicles2
-$CharacterEntry | Add-Member -type NoteProperty -Name 'vehicles3'  -Value $vehicles3
-$CharacterEntry | Add-Member -type NoteProperty -Name 'vehicles4'  -Value $vehicles4
-$CharacterEntry | Add-Member -type NoteProperty -Name 'vehicles5'  -Value $vehicles5
-$CharacterEntry | Add-Member -type NoteProperty -Name 'vehicles6'  -Value $vehicles6
-$CharacterEntry | Add-Member -type NoteProperty -Name 'vehicles7'  -Value $vehicles7
-$CharacterEntry | Add-Member -type NoteProperty -Name 'vehicles8'  -Value $vehicles8
-$CharacterEntry | Add-Member -type NoteProperty -Name 'vehicles9'  -Value $vehicles9
-$CharacterEntry | Add-Member -type NoteProperty -Name 'vehicles10'  -Value $vehicles10
-$CharacterEntry | Add-Member -type NoteProperty -Name 'vehicles11'  -Value $vehicles11
-$CharacterEntry | Add-Member -type NoteProperty -Name 'vehicles12'  -Value $vehicles12
-$CharacterEntry | Add-Member -type NoteProperty -Name 'vehicles13'  -Value $vehicles13
-$CharacterEntry | Add-Member -type NoteProperty -Name 'vehicles14'  -Value $vehicles14
-$CharacterEntry | Add-Member -type NoteProperty -Name 'vehicles15'  -Value $vehicles15
-$CharacterEntry | Add-Member -type NoteProperty -Name 'vehicles16'  -Value $vehicles16
-$CharacterEntry | Add-Member -type NoteProperty -Name 'vehicles17'  -Value $vehicles17
-$CharacterEntry | Add-Member -type NoteProperty -Name 'vehicles18'  -Value $vehicles18
+
+#Vehicle data here
+
+if ($Thingtype -eq 2 -OR $counter -eq 1){ 
+$CharacterEntry | Add-Member -type NoteProperty -Name 'ObjectWidth'  -Value $ObjectWidth
+$CharacterEntry | Add-Member -type NoteProperty -Name 'Objectskewleft'  -Value $Objectskewleft
+$CharacterEntry | Add-Member -type NoteProperty -Name 'Objectskewright'  -Value $Objectskewright
+$CharacterEntry | Add-Member -type NoteProperty -Name 'ObjectRoll'  -Value $ObjectRoll
+$CharacterEntry | Add-Member -type NoteProperty -Name 'ObjectHeight'  -Value $ObjectHeight
+$CharacterEntry | Add-Member -type NoteProperty -Name 'ObjectPitch'  -Value $ObjectPitch
+$CharacterEntry | Add-Member -type NoteProperty -Name 'ObjectSkew2'  -Value $ObjectSkew2
+$CharacterEntry | Add-Member -type NoteProperty -Name 'ObjectStretch'  -Value $ObjectStretch
+$CharacterEntry | Add-Member -type NoteProperty -Name 'ObjectLength'  -Value $ObjectLength
+}
 
 if ($filetype -eq 9 -or $filetype -eq 11 -or $filetype -eq 12){
 $CharacterEntry | Add-Member -type NoteProperty -Name 'Person1' -Value $Person1
@@ -871,10 +860,6 @@ if ($filetype -eq 9 -or $filetype -eq 11 -or $filetype -eq 12){
 $fpos = $fpos + 48
 }
 
-if ($state -eq 33 -OR $state -eq 61 -or $state -eq 64){  #Vehicles have these state values that correspond with an extra 36 bytes of data in their character definition. This seems to be where some vehicle data is stored. 33 = tank or car, 61 = car, 64 = ship
-$fpos = $fpos + 36
-}
-
 
 
 $fpos = $fpos + 168
@@ -896,17 +881,17 @@ $commandcount = convert16bitint $levfile[$fpos] $levfile[$fpos+1] #Read command 
 write-host ""
 write-host "File has $commandcount unit commands"
 
+if ($commandcount -eq 0){
+write-host "Bad data structure, quitting"
+exit}
 
-
-
-
+$commandnumber = 0
 $commandoutput = @()
 
 $fpos = $fpos+2
 DO
 {
 $commandcount = $commandcount -1
-
 $Next = convert16bitint $levfile[$fpos] $levfile[$fpos+1]
 $OtherThing = convert16bitint $levfile[$fpos+2] $levfile[$fpos+3]
 $X = convert16bitint $levfile[$fpos+4] $levfile[$fpos+5]
@@ -933,6 +918,7 @@ $OtherThingName = ""
 
 
 $CommandEntry = New-Object PSObject
+$CommandEntry | Add-Member -type NoteProperty -Name 'CommandNumber' -Value $CommandNumber
 $CommandEntry | Add-Member -type NoteProperty -Name 'Next' -Value $Next
 $CommandEntry | Add-Member -type NoteProperty -Name 'OtherThing' -Value $OtherThing
 $CommandEntry | Add-Member -type NoteProperty -Name 'OtherThingName' -Value $OtherThingname
@@ -956,6 +942,8 @@ $CommandEntry | Add-Member -type NoteProperty -Name 'field_1E' -Value $field_1E
 $Commandoutput += $CommandEntry
 
 $fpos = $fpos+32
+$commandnumber = $commandnumber +1
+
 
 }
 UNTIL ($commandcount -eq 0)
