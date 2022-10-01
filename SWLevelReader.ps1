@@ -1,7 +1,7 @@
 ﻿#Syndicate Wars Level Reader by Moburma
 
-#VERSION 0.5
-#LAST MODIFIED: 26/06/2022
+#VERSION 0.6
+#LAST MODIFIED: 01/10/2022
 
 <#
 .SYNOPSIS
@@ -36,9 +36,7 @@ write-host "Example: SWLevelReader.ps1 C006L001.DAT"
 }
 Else{
 
-$fileexists = Test-Path -Path $filename -PathType Leaf
-
-if ($fileexists -eq 0){
+if ((Test-Path -Path $filename -PathType Leaf) -eq 0){
 write-host "Error - No file with that name found. Please supply a target level file to read!"
 write-host ""
 write-host "Example: SWLevelReader.ps1 C006L001.DAT"
@@ -233,6 +231,63 @@ Switch ($commandtype){  #PersonCommandType
 }
 
 
+
+function identifyitem($Itemtype){ #Returns what the item name is
+
+Switch ($Itemtype){  
+
+
+    0{ return 'Briefcase'}
+    1{ return 'Uzi'}
+    2{ return 'Minigun'}
+    3{ return 'Pulse Laser'}
+    4{ return 'Electron Mace'}
+    5{ return 'Launcher'}
+    6{ return 'Nuclear Grenade'}
+    7{ return 'Persuadertron'}
+    8{ return 'Flamer'}
+    9{ return 'Disrupter'}
+    10{ return 'Psycho Gas'}
+    11{ return 'Knockout Gas'}
+    12{ return 'Ion Mine'}
+    13{ return 'High Explosive'}
+    14{ return 'Nothing'}
+    15{ return 'LR Rifle'}
+    16{ return 'Satellite Rain'}
+    17{ return 'Plasma Lance'}
+    18{ return 'Razor Wire'}
+    19{ return 'Nothing'}
+    20{ return 'Graviton Gun'}
+    21{ return 'Persuadertron II'}
+    22{ return 'Stasis Field'}
+    23{ return 'Nothing'}
+    24{ return 'Chromotap'}
+    25{ return 'Displacertron'}
+    26{ return 'Cerberus IFF'}
+    27{ return 'Medikit'}
+    28{ return 'Automedikit'}
+    29{ return 'Trigger Wire'}
+    30{ return 'Clone Shield'}
+    31{ return 'Epidermis'}
+}
+
+}
+
+
+function identifyepidermis($Itemtype){ #Returns what the epidermis type name is
+
+Switch ($Itemtype){  
+ 
+    1{ return 'Epidermis 1 - Hard Skin'}
+    2{ return 'Epidermis 2 - Flame Skin'}
+    3{ return 'Epidermis 3 - Energy Skin'}
+    4{ return 'Epidermis 4 - Stealth Skin'}
+
+}
+
+}
+
+
 function identifyvehicle ($vehicletype){ #Returns what the vehicle type name is based on startframe
 
 Switch ($vehicletype) {
@@ -423,7 +478,8 @@ $Health = convert16bitint $levfile[$fpos+58] $levfile[$fpos+59]
 $Owner = convert16bitint $levfile[$fpos+60] $levfile[$fpos+61]
 $PathOffset = $levfile[$fpos+62]
 $SubState = $levfile[$fpos+63]
-$PTarget = convert32bitint $levfile[$fpos+64] $levfile[$fpos+65] $levfile[$fpos+66] $levfile[$fpos+67]
+#$PTarget = convert32bitint $levfile[$fpos+64] $levfile[$fpos+65] $levfile[$fpos+66] $levfile[$fpos+67]
+$PTarget = convert16bitint $levfile[$fpos+66] $levfile[$fpos+67]
 $Flag2 = convert32bitint $levfile[$fpos+68] $levfile[$fpos+69] $levfile[$fpos+70] $levfile[$fpos+71]
 $GotoThingIndex = convert16bitint $levfile[$fpos+72] $levfile[$fpos+73]
 $OldTarget = convert16bitint $levfile[$fpos+74] $levfile[$fpos+75]
@@ -460,7 +516,8 @@ $MaxHealth = convert16bitint $levfile[$fpos+126] $levfile[$fpos+127]
 $Flag3 = $levfile[$fpos+128]
 $OldSubType = $levfile[$fpos+129]
 $ShieldEnergy = convert16bitint $levfile[$fpos+130] $levfile[$fpos+131]
-$ShieldGlowTimer = $levfile[$fpos+132]
+#$ShieldGlowTimer = $levfile[$fpos+132]
+$ShieldGlowTimer = convert16bitint $levfile[$fpos+132] $levfile[$fpos+133]
 $WeaponDir = $levfile[$fpos+133]
 $SpecialOwner = convert16bitint $levfile[$fpos+134] $levfile[$fpos+135]
 $WorkPlace = convert16bitint $levfile[$fpos+136] $levfile[$fpos+137]
@@ -673,40 +730,33 @@ $fpos = $fpos +36
 
 
 if ($filetype -eq 9 -or $filetype -eq 11 -or $filetype -eq 12){  #scan for extended data in old files first
-$Person1 = convert32bitint $levfile[$fpos+168] $levfile[$fpos+169] $levfile[$fpos+170] $levfile[$fpos+171]  
-#$Person2 = convert16bitint $levfile[$fpos+171] $levfile[$fpos+172]
-$Person3 = convert16bitint $levfile[$fpos+172] $levfile[$fpos+173]
+$Extended1 = convert16bitint $levfile[$fpos+168] $levfile[$fpos+169] 
+$Extended2 = convert16bitint $levfile[$fpos+170] $levfile[$fpos+171]
+$Extended3 = convert16bitint $levfile[$fpos+172] $levfile[$fpos+173]
 
 
-$person4 = convert32bitint $levfile[$fpos+174] $levfile[$fpos+175] 
-$person5 = convert32bitint $levfile[$fpos+176] $levfile[$fpos+177]
-$person6 = convert32bitint $levfile[$fpos+178] $levfile[$fpos+179]
+$Extended4 = convert32bitint $levfile[$fpos+174] $levfile[$fpos+175] 
+$Extended5 = convert32bitint $levfile[$fpos+176] $levfile[$fpos+177]
+$Extended6 = convert32bitint $levfile[$fpos+178] $levfile[$fpos+179]
 
-$person11 = convert16bitint $levfile[$fpos+190] $levfile[$fpos+191] 
+$Extended7 = convert16bitint $levfile[$fpos+180] $levfile[$fpos+181] $levfile[$fpos+182] $levfile[$fpos+183]
+#$Extended8 = convert16bitint $levfile[$fpos+183] $levfile[$fpos+184]
+$Extended9 = convert16bitint $levfile[$fpos+185] $levfile[$fpos+186]
+$Extended10 = convert16bitint $levfile[$fpos+187] $levfile[$fpos+188]
+$Extended11 = convert16bitint $levfile[$fpos+190] $levfile[$fpos+191] 
+$Extended13 = convert16bitint $levfile[$fpos+193] $levfile[$fpos+194]
+$Extended14 = convert16bitint $levfile[$fpos+195] $levfile[$fpos+196] $levfile[$fpos+197] $levfile[$fpos+198]
+#$Extended15 = convert16bitint $levfile[$fpos+197] $levfile[$fpos+198]
+$Extended16 = convert16bitint $levfile[$fpos+199] $levfile[$fpos+200]
+$Extended17 = convert16bitint $levfile[$fpos+201] $levfile[$fpos+202]
+$Extended18 = convert16bitint $levfile[$fpos+203] $levfile[$fpos+204]
 
+$Extended23 = convert32bitint $levfile[$fpos+205] $levfile[$fpos+206] $levfile[$fpos+207] $levfile[$fpos+208]
+#$Extended24 = convert16bitint $levfile[$fpos+207] $levfile[$fpos+208]
+$Extended25 = convert16bitint $levfile[$fpos+209] $levfile[$fpos+210]
+$Extended26 = convert16bitint $levfile[$fpos+211] $levfile[$fpos+212]
 
-
-$Person7 = convert16bitint $levfile[$fpos+181] $levfile[$fpos+182]
-$Person8 = convert16bitint $levfile[$fpos+183] $levfile[$fpos+184]
-$Person9 = convert16bitint $levfile[$fpos+185] $levfile[$fpos+186]
-$Person10 = convert16bitint $levfile[$fpos+187] $levfile[$fpos+188]
-
-$Person13 = convert16bitint $levfile[$fpos+193] $levfile[$fpos+194]
-$Person14 = convert16bitint $levfile[$fpos+195] $levfile[$fpos+196]
-$Person15 = convert16bitint $levfile[$fpos+197] $levfile[$fpos+198]
-$Person16 = convert16bitint $levfile[$fpos+199] $levfile[$fpos+200]
-$Person17 = convert16bitint $levfile[$fpos+201] $levfile[$fpos+202]
-$Person18 = convert16bitint $levfile[$fpos+203] $levfile[$fpos+204]
-$Person19 = convert16bitint $levfile[$fpos+203] $levfile[$fpos+204]
-$Person20 = convert16bitint $levfile[$fpos+203] $levfile[$fpos+204]
-$Person21 = convert16bitint $levfile[$fpos+203] $levfile[$fpos+204]
-$Person22 = convert16bitint $levfile[$fpos+203] $levfile[$fpos+204]
-$Person23 = convert32bitint $levfile[$fpos+205] $levfile[$fpos+206] $levfile[$fpos+207] $levfile[$fpos+208]
-#$Person24 = convert16bitint $levfile[$fpos+207] $levfile[$fpos+208]
-$Person25 = convert16bitint $levfile[$fpos+209] $levfile[$fpos+210]
-$Person26 = convert16bitint $levfile[$fpos+211] $levfile[$fpos+212]
-
-$Person27 = convert32bitint $levfile[$fpos+212] $levfile[$fpos+213] $levfile[$fpos+214] $levfile[$fpos+215]
+$Extended27 = convert32bitint $levfile[$fpos+212] $levfile[$fpos+213] $levfile[$fpos+214] $levfile[$fpos+215]
 
 }
 
@@ -801,7 +851,7 @@ $CharacterEntry | Add-Member -type NoteProperty -Name 'CurrentWeapon' -Value $Cu
 $CharacterEntry | Add-Member -type NoteProperty -Name 'GotoX' -Value $GotoX
 $CharacterEntry | Add-Member -type NoteProperty -Name 'GotoZ' -Value $GotoZ
 $CharacterEntry | Add-Member -type NoteProperty -Name 'TempWeapon' -Value $TempWeapon
-$CharacterEntry | Add-Member -type NoteProperty -Name 'Stamina' -Value $Stamina
+$CharacterEntry | Add-Member -type NoteProperty -Name 'Stamina/Vehicle Armour' -Value $Stamina
 $CharacterEntry | Add-Member -type NoteProperty -Name 'MaxStamina' -Value $MaxStamina
 $CharacterEntry | Add-Member -type NoteProperty -Name 'Weapons Carried Value' -Value $WeaponsCarried2
 $CharacterEntry | Add-Member -type NoteProperty -Name 'Weapons Carried List' -Value $weaponstext.Trim()
@@ -820,35 +870,37 @@ $CharacterEntry | Add-Member -type NoteProperty -Name 'ObjectStretch'  -Value $O
 $CharacterEntry | Add-Member -type NoteProperty -Name 'ObjectLength'  -Value $ObjectLength
 }
 
+#Pre-alpha level file format extra bytes here. Dopey temporary heading names for now.
+
 if ($filetype -eq 9 -or $filetype -eq 11 -or $filetype -eq 12){
-$CharacterEntry | Add-Member -type NoteProperty -Name 'Person1' -Value $Person1
-$CharacterEntry | Add-Member -type NoteProperty -Name 'Person2' -Value $Person2
-$CharacterEntry | Add-Member -type NoteProperty -Name 'Person3' -Value $Person3
-$CharacterEntry | Add-Member -type NoteProperty -Name 'Person4' -Value $Person4
-$CharacterEntry | Add-Member -type NoteProperty -Name 'Person5' -Value $Person5
-$CharacterEntry | Add-Member -type NoteProperty -Name 'Person6' -Value $Person6
-$CharacterEntry | Add-Member -type NoteProperty -Name 'Person7' -Value $Person7
-$CharacterEntry | Add-Member -type NoteProperty -Name 'Person8' -Value $Person8
-$CharacterEntry | Add-Member -type NoteProperty -Name 'Person9' -Value $Person9
-$CharacterEntry | Add-Member -type NoteProperty -Name 'Person10' -Value $Person10
-$CharacterEntry | Add-Member -type NoteProperty -Name 'Person11' -Value $Person11
-$CharacterEntry | Add-Member -type NoteProperty -Name 'Person12' -Value $Person12
-$CharacterEntry | Add-Member -type NoteProperty -Name 'Person13' -Value $Person13
-$CharacterEntry | Add-Member -type NoteProperty -Name 'Person14' -Value $Person14
-$CharacterEntry | Add-Member -type NoteProperty -Name 'Person15' -Value $Person15
-$CharacterEntry | Add-Member -type NoteProperty -Name 'Person16' -Value $Person16
-$CharacterEntry | Add-Member -type NoteProperty -Name 'Person17' -Value $Person17
-$CharacterEntry | Add-Member -type NoteProperty -Name 'Person18' -Value $Person18
-$CharacterEntry | Add-Member -type NoteProperty -Name 'Person19' -Value $Person19
-$CharacterEntry | Add-Member -type NoteProperty -Name 'Person20' -Value $Person20
-$CharacterEntry | Add-Member -type NoteProperty -Name 'Person21' -Value $Person21
-$CharacterEntry | Add-Member -type NoteProperty -Name 'Person22' -Value $Person22
-$CharacterEntry | Add-Member -type NoteProperty -Name 'Person23' -Value $Person23
-$CharacterEntry | Add-Member -type NoteProperty -Name 'Person24' -Value $Person24
-$CharacterEntry | Add-Member -type NoteProperty -Name 'Person25' -Value $Person25
-$CharacterEntry | Add-Member -type NoteProperty -Name 'Person26' -Value $Person26
-$CharacterEntry | Add-Member -type NoteProperty -Name 'Person27' -Value $Person27
-$CharacterEntry | Add-Member -type NoteProperty -Name 'Person28' -Value $Person28
+$CharacterEntry | Add-Member -type NoteProperty -Name 'Extended1' -Value $Extended1
+$CharacterEntry | Add-Member -type NoteProperty -Name 'Extended2' -Value $Extended2
+$CharacterEntry | Add-Member -type NoteProperty -Name 'Extended3' -Value $Extended3
+$CharacterEntry | Add-Member -type NoteProperty -Name 'Extended4' -Value $Extended4
+$CharacterEntry | Add-Member -type NoteProperty -Name 'Extended5' -Value $Extended5
+$CharacterEntry | Add-Member -type NoteProperty -Name 'Extended6' -Value $Extended6
+$CharacterEntry | Add-Member -type NoteProperty -Name 'Extended7' -Value $Extended7
+$CharacterEntry | Add-Member -type NoteProperty -Name 'Extended8' -Value $Extended8
+$CharacterEntry | Add-Member -type NoteProperty -Name 'Extended9' -Value $Extended9
+$CharacterEntry | Add-Member -type NoteProperty -Name 'Extended10' -Value $Extended10
+$CharacterEntry | Add-Member -type NoteProperty -Name 'Extended11' -Value $Extended11
+$CharacterEntry | Add-Member -type NoteProperty -Name 'Extended12' -Value $Extended12
+$CharacterEntry | Add-Member -type NoteProperty -Name 'Extended13' -Value $Extended13
+$CharacterEntry | Add-Member -type NoteProperty -Name 'Extended14' -Value $Extended14
+$CharacterEntry | Add-Member -type NoteProperty -Name 'Extended15' -Value $Extended15
+$CharacterEntry | Add-Member -type NoteProperty -Name 'Extended16' -Value $Extended16
+$CharacterEntry | Add-Member -type NoteProperty -Name 'Extended17' -Value $Extended17
+$CharacterEntry | Add-Member -type NoteProperty -Name 'Extended18' -Value $Extended18
+$CharacterEntry | Add-Member -type NoteProperty -Name 'Extended19' -Value $Extended19
+$CharacterEntry | Add-Member -type NoteProperty -Name 'Extended20' -Value $Extended20
+$CharacterEntry | Add-Member -type NoteProperty -Name 'Extended21' -Value $Extended21
+$CharacterEntry | Add-Member -type NoteProperty -Name 'Extended22' -Value $Extended22
+$CharacterEntry | Add-Member -type NoteProperty -Name 'Extended23' -Value $Extended23
+$CharacterEntry | Add-Member -type NoteProperty -Name 'Extended24' -Value $Extended24
+$CharacterEntry | Add-Member -type NoteProperty -Name 'Extended25' -Value $Extended25
+$CharacterEntry | Add-Member -type NoteProperty -Name 'Extended26' -Value $Extended26
+$CharacterEntry | Add-Member -type NoteProperty -Name 'Extended27' -Value $Extended27
+$CharacterEntry | Add-Member -type NoteProperty -Name 'Extended28' -Value $Extended28
 }
 
 
@@ -916,7 +968,6 @@ $OtherThingName = ""
 }
 
 
-
 $CommandEntry = New-Object PSObject
 $CommandEntry | Add-Member -type NoteProperty -Name 'CommandNumber' -Value $CommandNumber
 $CommandEntry | Add-Member -type NoteProperty -Name 'Next' -Value $Next
@@ -948,11 +999,125 @@ $commandnumber = $commandnumber +1
 }
 UNTIL ($commandcount -eq 0)
 echo $fpos
+
 $fileext = $csvname+"Commands.csv"
 write-host "Exporting to $fileext"
 
 $commandoutput | export-csv -NoTypeInformation $fileext
 
+if ($groupmethod -eq 1){
+$groupstart = $groupstart + 43
+}
+
+
+$fpos = $groupstart + 2619
+echo $fpos
+
+$itemcount = $levfile[$fpos]  #Read item count header number
+
+
+if ($itemcount -eq 0){
+write-host "Either no items in level or bad item data structure, quitting"
+exit
+}
+
+write-host ""
+write-host "File has $itemcount items"
+
+
+$itemnumber = 0
+$itemoutput = @()
+
+$fpos = $fpos+2
+DO
+{
+$itemcount = $itemcount -1
+$ItemParent = convert16bitint $levfile[$fpos] $levfile[$fpos+1]
+$ItemNext = convert16bitint $levfile[$fpos+2] $levfile[$fpos+3]
+$ItemLinkParent = convert16bitint $levfile[$fpos+4] $levfile[$fpos+5]
+$ItemLinkChild = convert16bitint $levfile[$fpos+6] $levfile[$fpos+7]
+$ItemSubType = $levfile[$fpos+8] 
+$ItemType  = $levfile[$fpos+9] 
+$ItemState  = convert16bitint $levfile[$fpos+10] $levfile[$fpos+11]
+$ItemFlag = convert32bitint $levfile[$fpos+12] $levfile[$fpos+13] $levfile[$fpos+14] $levfile[$fpos+15]
+$ItemLinkSame  = convert16bitint $levfile[$fpos+16] $levfile[$fpos+17]
+$ItemObject = convert16bitint $levfile[$fpos+18] $levfile[$fpos+19]
+$ItemRadius  = convert16bitint $levfile[$fpos+20] $levfile[$fpos+21]
+$ItemThingOffset = convert16bitint $levfile[$fpos+22] $levfile[$fpos+23]
+$ItemX = convert32bitint $levfile[$fpos+24] $levfile[$fpos+25] $levfile[$fpos+26] $levfile[$fpos+27]
+$ItemY = convert32bitint $levfile[$fpos+28] $levfile[$fpos+29] $levfile[$fpos+30] $levfile[$fpos+31]
+$ItemZ = convert32bitint $levfile[$fpos+32] $levfile[$fpos+33] $levfile[$fpos+34] $levfile[$fpos+35]
+$ItemFrame = convert16bitint $levfile[$fpos+36] $levfile[$fpos+37]
+$ItemStartFrame = convert16bitint $levfile[$fpos+38] $levfile[$fpos+39]
+$ItemTimer1 = convert16bitint $levfile[$fpos+40] $levfile[$fpos+41]
+$ItemStartTimer1 = convert16bitint $levfile[$fpos+42] $levfile[$fpos+43]
+$ItemWeaponType = convert16bitint $levfile[$fpos+44] $levfile[$fpos+45]
+$ItemLastFired = convert16bitint $levfile[$fpos+46] $levfile[$fpos+47]
+$ItemAmmo = convert16bitint $levfile[$fpos+48] $levfile[$fpos+49]
+$ItemOwner = convert16bitint $levfile[$fpos+50] $levfile[$fpos+51]
+$ItemOnFace = convert16bitint $levfile[$fpos+52] $levfile[$fpos+53]
+$ItemDummy1 = convert16bitint $levfile[$fpos+54] $levfile[$fpos+55]
+$Itemfield_38 =  convert32bitint $levfile[$fpos+56] $levfile[$fpos+57] $levfile[$fpos+58] $levfile[$fpos+59] 
+
+If ($ItemSubType -eq "2"){
+$itemname = "Money Briefcase ($ItemAmmo credits)"
+}
+Else {
+
+    if( $ItemWeaponType -eq "31"){
+       $ItemName = identifyepidermis($ItemAmmo)
+      }
+    
+    Else{
+    
+    $ItemName = identifyitem($ItemWeaponType)
+    }
+}
+
+
+$ItemEntry = New-Object PSObject
+$ItemEntry | Add-Member -type NoteProperty -Name 'Parent' -Value $ItemParent
+$ItemEntry | Add-Member -type NoteProperty -Name 'Next' -Value $ItemNext
+$ItemEntry | Add-Member -type NoteProperty -Name 'LinkParent' -Value $ItemLinkParent
+$ItemEntry | Add-Member -type NoteProperty -Name 'LinkChild' -Value $ItemLinkChild
+$ItemEntry | Add-Member -type NoteProperty -Name 'SubType' -Value $ItemSubType
+$ItemEntry | Add-Member -type NoteProperty -Name 'Type' -Value $ItemType
+$ItemEntry | Add-Member -type NoteProperty -Name 'State' -Value $ItemState
+$ItemEntry | Add-Member -type NoteProperty -Name 'Flag' -Value $ItemFlag
+$ItemEntry | Add-Member -type NoteProperty -Name 'LinkSame' -Value $ItemLinkSame
+$ItemEntry | Add-Member -type NoteProperty -Name 'Object' -Value $ItemObject
+$ItemEntry | Add-Member -type NoteProperty -Name 'Radius' -Value $ItemRadius
+$ItemEntry | Add-Member -type NoteProperty -Name 'ThingOffset' -Value $ItemThingOffset
+$ItemEntry | Add-Member -type NoteProperty -Name 'X' -Value $ItemX
+$ItemEntry | Add-Member -type NoteProperty -Name 'Y' -Value $ItemY
+$ItemEntry | Add-Member -type NoteProperty -Name 'Z' -Value $ItemZ
+$ItemEntry | Add-Member -type NoteProperty -Name 'Frame' -Value $ItemFrame
+$ItemEntry | Add-Member -type NoteProperty -Name 'StartFrame' -Value $ItemStartFrame
+$ItemEntry | Add-Member -type NoteProperty -Name 'Timer1' -Value $ItemTimer1
+$ItemEntry | Add-Member -type NoteProperty -Name 'StartTimer1' -Value $ItemStartTimer1
+$ItemEntry | Add-Member -type NoteProperty -Name 'WeaponType' -Value $ItemWeaponType
+$ItemEntry | Add-Member -type NoteProperty -Name 'ItemName' -Value $ItemName
+$ItemEntry | Add-Member -type NoteProperty -Name 'LastFired' -Value $ItemLastFired
+$ItemEntry | Add-Member -type NoteProperty -Name 'Ammo' -Value $ItemAmmo
+$ItemEntry | Add-Member -type NoteProperty -Name 'Owner' -Value $ItemOwner
+$ItemEntry | Add-Member -type NoteProperty -Name 'OnFace' -Value $ItemOnFace
+$ItemEntry | Add-Member -type NoteProperty -Name 'DummyData' -Value $ItemDummy1
+$ItemEntry | Add-Member -type NoteProperty -Name 'field_38' -Value $Itemfield_38
+
+$Itemoutput += $ItemEntry
+
+
+$fpos = $fpos+60
+
+
+}
+UNTIL ($itemcount -eq 0)
+
+
+$fileext = $csvname+"Items.csv"
+write-host "Exporting to $fileext"
+
+$Itemoutput | export-csv -NoTypeInformation $fileext
 
 
 }
