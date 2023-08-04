@@ -1,7 +1,7 @@
 ﻿#Syndicate Wars Level Reader by Moburma
 
-#VERSION 0.7
-#LAST MODIFIED: 01/08/2023
+#VERSION 0.8
+#LAST MODIFIED: 04/08/2023
 
 <#
 .SYNOPSIS
@@ -435,7 +435,7 @@ UNTIL ($estring -eq 1)
 }
 
 $Fileoutput = @()
-
+$VFileoutput = @()
 
 $fpos = 6
 
@@ -460,7 +460,7 @@ if ($filetype -lt 15){
     $state = convert16bitint $levfile[$fpos+10] $levfile[$fpos+11]
     $Flag =  convert32bitint $levfile[$fpos+12] $levfile[$fpos+13] $levfile[$fpos+14] $levfile[$fpos+15]
     $LinkSame = convert16bitint $levfile[$fpos+16] $levfile[$fpos+17]
-    $TngUnkn18 = convert16bitint $levfile[$fpos+18] $levfile[$fpos+19]
+    $Object= convert16bitint $levfile[$fpos+18] $levfile[$fpos+19]
     $Radius = convert16bitint $levfile[$fpos+20] $levfile[$fpos+21]
     $TngUnkn22 = convert16bitint $levfile[$fpos+22] $levfile[$fpos+23]
     $map_posx = convert32bitint $levfile[$fpos+24] $levfile[$fpos+25] $levfile[$fpos+26] $levfile[$fpos+27]
@@ -473,12 +473,9 @@ if ($filetype -lt 15){
     $TngUnkn44 = convert32bitint $levfile[$fpos+44] $levfile[$fpos+45] $levfile[$fpos+46] $levfile[$fpos+47]
     $TngUnkn48 = convert32bitint $levfile[$fpos+48] $levfile[$fpos+49] 
     $ThingOffset = convert32bitint $levfile[$fpos+50] $levfile[$fpos+51]
-    $TngUnkn52= convert16bitint $levfile[$fpos+52] $levfile[$fpos+53]
-    $TngUnkn54 = convert16bitint $levfile[$fpos+54] $levfile[$fpos+55]
-    $TngUnkn56 = convert16bitint $levfile[$fpos+56] $levfile[$fpos+57]
-    $TngUnkn58 = convert16bitint $levfile[$fpos+58] $levfile[$fpos+59]
-    $TngUnkn60  = convert16bitint $levfile[$fpos+60] $levfile[$fpos+61]
-    $TngUnkn62  = convert16bitint $levfile[$fpos+62] $levfile[$fpos+63]
+    $VX = convert32bitint $levfile[$fpos+52] $levfile[$fpos+53] $levfile[$fpos+54] $levfile[$fpos+55]
+    $VY = convert32bitint $levfile[$fpos+56] $levfile[$fpos+57] $levfile[$fpos+58] $levfile[$fpos+59]
+    $VZ = convert32bitint $levfile[$fpos+60] $levfile[$fpos+61] $levfile[$fpos+62] $levfile[$fpos+63]
     $Stamina = convert16bitint $levfile[$fpos+64] $levfile[$fpos+65]
     $MaxStamina = convert32bitint $levfile[$fpos+66] $levfile[$fpos+67]
     $TngUnkn68 = convert16bitint $levfile[$fpos+68] $levfile[$fpos+69]
@@ -686,8 +683,7 @@ if ($filetype -lt 15){
     $WeaponTurn = convert16bitint $levfile[$fpos+136] $levfile[$fpos+137]
     $Brightness = $levfile[$fpos+138]
     $ComRange = $levfile[$fpos+139] 
-    $BumpMode =  $levfile[$fpos+140]
-    $BumpCount =  $levfile[$fpos+141] 
+    $TngUnkn140 = convert16bitint $levfile[$fpos+140] $levfile[$fpos+141] 
     $Vehicle = convert16bitint $levfile[$fpos+142] $levfile[$fpos+143]
     $LinkPassenger = convert16bitint $levfile[$fpos+144] $levfile[$fpos+145]
     $Within  = convert16bitint $levfile[$fpos+146] $levfile[$fpos+147]
@@ -705,14 +701,12 @@ if ($filetype -lt 15){
     $Frameid4 = $levfile[$fpos+167]
     $Frameid5 = $levfile[$fpos+168]
     $shadows1 = $levfile[$fpos+169]
-    $shadows2 = $levfile[$fpos+170]
-    $shadows3 = $levfile[$fpos+171]
-    $shadows4 = $levfile[$fpos+172]
+    $TNode = convert16bitint $levfile[$fpos+170] $levfile[$fpos+171]
+    $shadows2 = $levfile[$fpos+172]
     $RecoilTimer = $levfile[$fpos+173]
     $TngUnkn174 = convert16bitint $levfile[$fpos+174] $levfile[$fpos+175]
-    $Flag3 = $levfile[$fpos+176]
-    $OldSubType = $levfile[$fpos+177]
-    $TngUnkn178 = convert16bitint $levfile[$fpos+178] $levfile[$fpos+179]
+    $MaxEnergy  = convert16bitint $levfile[$fpos+176] $levfile[$fpos+177]
+    $Energy = convert16bitint $levfile[$fpos+178] $levfile[$fpos+179]
     $ShieldGlowTimer = $levfile[$fpos+180]
     $WeaponDir = $levfile[$fpos+181]
     $SpecialOwner = convert16bitint $levfile[$fpos+182] $levfile[$fpos+183]
@@ -720,10 +714,10 @@ if ($filetype -lt 15){
     $LeisurePlace = convert16bitint $levfile[$fpos+186] $levfile[$fpos+187]
     $WeaponTimer = convert16bitint $levfile[$fpos+188] $levfile[$fpos+189]
     $MaxHealth = convert16bitint $levfile[$fpos+190] $levfile[$fpos+191]
-    $MaxShieldEnergy = convert16bitint $levfile[$fpos+192] $levfile[$fpos+193]
+    $TngUnkn192 = convert16bitint $levfile[$fpos+192] $levfile[$fpos+193]
     $PersuadePower = convert16bitint $levfile[$fpos+194] $levfile[$fpos+195]
-    $MaxEnergy = convert16bitint $levfile[$fpos+196] $levfile[$fpos+197]
-    $Energy = convert16bitint $levfile[$fpos+198] $levfile[$fpos+199]
+    $TngUnkn196 = convert16bitint $levfile[$fpos+196] $levfile[$fpos+197]
+    $TngUnkn198 = convert16bitint $levfile[$fpos+198] $levfile[$fpos+199]
     $RecoilDir = $levfile[$fpos+200]
     $CurrentWeapon = $levfile[$fpos+201]
     $GotoX = convert16bitint $levfile[$fpos+202] $levfile[$fpos+203]
@@ -793,12 +787,9 @@ if ($filetype -lt 15){
     $CharacterEntry | Add-Member -type NoteProperty -Name 'TngUnkn44' -Value  $TngUnkn44
     $CharacterEntry | Add-Member -type NoteProperty -Name 'TngUnkn48' -Value  $TngUnkn48
     $CharacterEntry | Add-Member -type NoteProperty -Name 'Thing Offset' -Value $ThingOffset
-    $CharacterEntry | Add-Member -type NoteProperty -Name 'TngUnkn52' -Value  $TngUnkn52
-    $CharacterEntry | Add-Member -type NoteProperty -Name 'TngUnkn54' -Value  $TngUnkn54
-    $CharacterEntry | Add-Member -type NoteProperty -Name 'TngUnkn56' -Value  $TngUnkn56
-    $CharacterEntry | Add-Member -type NoteProperty -Name 'TngUnkn58' -Value  $TngUnkn58
-    $CharacterEntry | Add-Member -type NoteProperty -Name 'TngUnkn60' -Value  $TngUnkn60
-    $CharacterEntry | Add-Member -type NoteProperty -Name 'TngUnkn62' -Value  $TngUnkn62
+    $CharacterEntry | Add-Member -type NoteProperty -Name 'VX' -Value  $VX
+    $CharacterEntry | Add-Member -type NoteProperty -Name 'VY' -Value  $VY
+    $CharacterEntry | Add-Member -type NoteProperty -Name 'VZ' -Value  $VZ
     $CharacterEntry | Add-Member -type NoteProperty -Name 'Stamina/Vehicle Armour' -Value $Stamina
     $CharacterEntry | Add-Member -type NoteProperty -Name 'MaxStamina' -Value $MaxStamina
     $CharacterEntry | Add-Member -type NoteProperty -Name 'TngUnkn68' -Value  $TngUnkn68
@@ -840,8 +831,7 @@ if ($filetype -lt 15){
     $CharacterEntry | Add-Member -type NoteProperty -Name 'WeaponTurn' -Value $WeaponTurn
     $CharacterEntry | Add-Member -type NoteProperty -Name 'Brightness' -Value $Brightness
     $CharacterEntry | Add-Member -type NoteProperty -Name 'ComRange' -Value $ComRange
-    $CharacterEntry | Add-Member -type NoteProperty -Name 'BumpMode' -Value $BumpMode
-    $CharacterEntry | Add-Member -type NoteProperty -Name 'BumpCount' -Value $BumpCount
+    $CharacterEntry | Add-Member -type NoteProperty -Name 'TngUnkn140' -Value  $TngUnkn140
     $CharacterEntry | Add-Member -type NoteProperty -Name 'Vehicle' -Value $Vehicle
     $CharacterEntry | Add-Member -type NoteProperty -Name 'LinkPassenger' -Value $LinkPassenger
     $CharacterEntry | Add-Member -type NoteProperty -Name 'Within' -Value $Within
@@ -859,14 +849,12 @@ if ($filetype -lt 15){
     $CharacterEntry | Add-Member -type NoteProperty -Name 'FrameId4' -Value $FrameId4
     $CharacterEntry | Add-Member -type NoteProperty -Name 'FrameId5' -Value $FrameId5
     $CharacterEntry | Add-Member -type NoteProperty -Name 'Shadows1' -Value $Shadows1
+    $CharacterEntry | Add-Member -type NoteProperty -Name 'PassengerHead' -Value $PassengerHead
     $CharacterEntry | Add-Member -type NoteProperty -Name 'Shadows2' -Value $Shadows2
-    $CharacterEntry | Add-Member -type NoteProperty -Name 'Shadows3' -Value $Shadows3
-    $CharacterEntry | Add-Member -type NoteProperty -Name 'Shadows4' -Value $Shadows4
     $CharacterEntry | Add-Member -type NoteProperty -Name 'RecoilTimer' -Value $RecoilTimer
     $CharacterEntry | Add-Member -type NoteProperty -Name 'TngUnkn174' -Value $TngUnkn174
-    $CharacterEntry | Add-Member -type NoteProperty -Name 'Flag3' -Value $Flag3
-    $CharacterEntry | Add-Member -type NoteProperty -Name 'OldSubType' -Value $OldSubType
-    $CharacterEntry | Add-Member -type NoteProperty -Name 'TngUnkn178' -Value  $TngUnkn178
+    $CharacterEntry | Add-Member -type NoteProperty -Name 'MaxEnergy' -Value $MaxEnergy 
+    $CharacterEntry | Add-Member -type NoteProperty -Name 'Energy' -Value  $Energy
     $CharacterEntry | Add-Member -type NoteProperty -Name 'ShieldGlowTimer' -Value $ShieldGlowTimer
     $CharacterEntry | Add-Member -type NoteProperty -Name 'WeaponDir' -Value $WeaponDir
     $CharacterEntry | Add-Member -type NoteProperty -Name 'SpecialOwner' -Value $SpecialOwner
@@ -874,9 +862,10 @@ if ($filetype -lt 15){
     $CharacterEntry | Add-Member -type NoteProperty -Name 'LeisurePlace' -Value $LeisurePlace
     $CharacterEntry | Add-Member -type NoteProperty -Name 'WeaponTimer' -Value $WeaponTimer
     $CharacterEntry | Add-Member -type NoteProperty -Name 'MaxHealth' -Value $MaxHealth
+    $CharacterEntry | Add-Member -type NoteProperty -Name 'TngUnkn192' -Value  $TngUnkn192
     $CharacterEntry | Add-Member -type NoteProperty -Name 'PersuadePower' -Value $PersuadePower
-    $CharacterEntry | Add-Member -type NoteProperty -Name 'MaxEnergy' -Value $MaxEnergy
-    $CharacterEntry | Add-Member -type NoteProperty -Name 'Energy' -Value $Energy
+    $CharacterEntry | Add-Member -type NoteProperty -Name 'TngUnkn196' -Value  $TngUnkn196
+    $CharacterEntry | Add-Member -type NoteProperty -Name 'TngUnkn198' -Value  $TngUnkn198
     $CharacterEntry | Add-Member -type NoteProperty -Name 'RecoilDir' -Value $RecoilDir
     $CharacterEntry | Add-Member -type NoteProperty -Name 'CurrentWeapon' -Value $CurrentWeapon
     $CharacterEntry | Add-Member -type NoteProperty -Name 'GotoX' -Value $GotoX
@@ -928,7 +917,7 @@ if ($filetype -lt 15){
 
 }
 
-else{
+else{   #Final game levels, version 15 - 17
     
     write-host "Char No, Char type, Character Name, Thing Type, Vehicle Type, Weapons Carried Number, Weapons Carried List, Group No, Group Name, Effective Group, State, Map Position (X, Y, Z), MaxEnergy"   #console headers
 
@@ -1004,7 +993,6 @@ $MaxHealth = convert16bitint $levfile[$fpos+126] $levfile[$fpos+127]
 $Flag3 = $levfile[$fpos+128]
 $OldSubType = $levfile[$fpos+129]
 $ShieldEnergy = convert16bitint $levfile[$fpos+130] $levfile[$fpos+131]
-#$ShieldGlowTimer = $levfile[$fpos+132]
 $ShieldGlowTimer = convert16bitint $levfile[$fpos+132] $levfile[$fpos+133]
 $WeaponDir = $levfile[$fpos+133]
 $SpecialOwner = convert16bitint $levfile[$fpos+134] $levfile[$fpos+135]
@@ -1024,7 +1012,7 @@ $TempWeapon = convert16bitint $levfile[$fpos+158] $levfile[$fpos+159]
 $Stamina = convert16bitint $levfile[$fpos+160] $levfile[$fpos+161]
 $MaxStamina = convert16bitint $levfile[$fpos+162] $levfile[$fpos+163]
 
-if($type -eq 40 -or $type -eq 50 -or $type -eq 51 -or $type -eq 54 ){
+if($Thingtype -eq 2 ){
 $vehicletype = identifyvehicle $startframe
 }
 Else{
@@ -1200,17 +1188,58 @@ $weaponstext = $null
         $weaponstext ="Unarmed"
         }
 
-if ($state -eq 33 -OR $state -eq 61 -or $state -eq 64){  #Vehicles data
+if ($Thingtype -eq 2){  #Vehicles data
 
-$ObjectWidth = convert32bitint $levfile[$fpos+168] $levfile[$fpos+169] $levfile[$fpos+170] $levfile[$fpos+171]  #Default is normally 0400      
-$Objectskewleft = convert32bitint $levfile[$fpos+172] $levfile[$fpos+173] $levfile[$fpos+174] $levfile[$fpos+175] 
-$Objectskewright = convert32bitint $levfile[$fpos+176] $levfile[$fpos+177] $levfile[$fpos+178] $levfile[$fpos+179] 
-$ObjectRoll = convert32bitint $levfile[$fpos+180] $levfile[$fpos+181] $levfile[$fpos+182] $levfile[$fpos+183] 
-$ObjectHeight = convert32bitint $levfile[$fpos+184] $levfile[$fpos+185] $levfile[$fpos+186] $levfile[$fpos+187] #Default is normally 0400 
-$ObjectPitch = convert32bitint $levfile[$fpos+188] $levfile[$fpos+189] $levfile[$fpos+190] $levfile[$fpos+191]
-$ObjectSkew2 = convert32bitint $levfile[$fpos+192] $levfile[$fpos+193] $levfile[$fpos+194] $levfile[$fpos+195]
-$ObjectStretch = convert32bitint $levfile[$fpos+196] $levfile[$fpos+197] $levfile[$fpos+198] $levfile[$fpos+199]
-$ObjectLength = convert32bitint $levfile[$fpos+200] $levfile[$fpos+201] $levfile[$fpos+201] $levfile[$fpos+203] #Default is normally 0400 
+    $Object = convert16bitint $levfile[$fpos+82] $levfile[$fpos+83]
+    $MatrixIndex = convert16bitint $levfile[$fpos+84] $levfile[$fpos+85]
+    $NumbObjects = $levfile[$fpos+86]
+    $Dummy2 = $levfile[$fpos+87]
+    $WeaponTurn = convert16bitint $levfile[$fpos+88] $levfile[$fpos+89]
+    $ReqdSpeed = convert16bitint $levfile[$fpos+90] $levfile[$fpos+91]
+    $MaxSpeed = convert16bitint $levfile[$fpos+92] $levfile[$fpos+93]
+    $PassengerHead = convert16bitint $levfile[$fpos+94] $levfile[$fpos+95]
+    $TNode = convert16bitint $levfile[$fpos+96] $levfile[$fpos+97]
+    $AngleDY = convert16bitint $levfile[$fpos+98] $levfile[$fpos+99]
+    $AngleX = convert16bitint $levfile[$fpos+100] $levfile[$fpos+101]
+    $AngleY = convert16bitint $levfile[$fpos+102] $levfile[$fpos+103]
+    $AngleZ = convert16bitint $levfile[$fpos+104] $levfile[$fpos+105]
+    $GotoX = convert16bitint $levfile[$fpos+106] $levfile[$fpos+107]
+    $GotoY = convert16bitint $levfile[$fpos+108] $levfile[$fpos+109]
+    $GotoZ = convert16bitint $levfile[$fpos+110] $levfile[$fpos+111]
+    $VehicleAcceleration = convert16bitint $levfile[$fpos+112] $levfile[$fpos+113]
+    $LeisurePlace = convert16bitint $levfile[$fpos+114] $levfile[$fpos+115]
+    $TargetDX = convert16bitint $levfile[$fpos+116] $levfile[$fpos+117]
+    $TargetDY = convert16bitint $levfile[$fpos+118] $levfile[$fpos+119]
+    $TargetDZ = convert16bitint $levfile[$fpos+120] $levfile[$fpos+121]
+    $OnFace = convert16bitint $levfile[$fpos+122] $levfile[$fpos+123]
+    $WorkPlace = convert16bitint $levfile[$fpos+124] $levfile[$fpos+125]
+    $ComHead = convert16bitint $levfile[$fpos+126] $levfile[$fpos+127]
+    $ComCur = convert16bitint $levfile[$fpos+128] $levfile[$fpos+129]
+    $Timer2 = convert16bitint $levfile[$fpos+130] $levfile[$fpos+131]
+    $RecoilTimer = convert16bitint $levfile[$fpos+132] $levfile[$fpos+133]
+    $MaxHealth = convert16bitint $levfile[$fpos+134] $levfile[$fpos+135]
+    $Dummy = convert16bitint $levfile[$fpos+136] $levfile[$fpos+137]
+    $Dummy12 = convert16bitint $levfile[$fpos+138] $levfile[$fpos+139]
+    $SubThing = convert16bitint $levfile[$fpos+148] $levfile[$fpos+149]
+    $Agok = convert16bitint $levfile[$fpos+150] $levfile[$fpos+151]
+    $WobbleZP = convert32bitint $levfile[$fpos+152] $levfile[$fpos+153] $levfile[$fpos+154] $levfile[$fpos+155]
+    $WobbleZV = convert32bitint $levfile[$fpos+156] $levfile[$fpos+157] $levfile[$fpos+158] $levfile[$fpos+159]
+    $Armour = $levfile[$fpos+160]
+    $PissedOffWithWaiting = $levfile[$fpos+161]
+    $ZebraOldHealth = convert16bitint $levfile[$fpos+162] $levfile[$fpos+163]
+    $destx = convert16bitint $levfile[$fpos+164] $levfile[$fpos+165]
+    $destz = convert16bitint $levfile[$fpos+166] $levfile[$fpos+167]
+    
+
+    $ObjectWidth = convert32bitint $levfile[$fpos+168] $levfile[$fpos+169] $levfile[$fpos+170] $levfile[$fpos+171]  #Default is normally 0400      
+    $Objectskewleft = convert32bitint $levfile[$fpos+172] $levfile[$fpos+173] $levfile[$fpos+174] $levfile[$fpos+175] 
+    $Objectskewright = convert32bitint $levfile[$fpos+176] $levfile[$fpos+177] $levfile[$fpos+178] $levfile[$fpos+179] 
+    $ObjectRoll = convert32bitint $levfile[$fpos+180] $levfile[$fpos+181] $levfile[$fpos+182] $levfile[$fpos+183] 
+    $ObjectHeight = convert32bitint $levfile[$fpos+184] $levfile[$fpos+185] $levfile[$fpos+186] $levfile[$fpos+187] #Default is normally 0400 
+    $ObjectPitch = convert32bitint $levfile[$fpos+188] $levfile[$fpos+189] $levfile[$fpos+190] $levfile[$fpos+191]
+    $ObjectSkew2 = convert32bitint $levfile[$fpos+192] $levfile[$fpos+193] $levfile[$fpos+194] $levfile[$fpos+195]
+    $ObjectStretch = convert32bitint $levfile[$fpos+196] $levfile[$fpos+197] $levfile[$fpos+198] $levfile[$fpos+199]
+    $ObjectLength = convert32bitint $levfile[$fpos+200] $levfile[$fpos+201] $levfile[$fpos+201] $levfile[$fpos+203] #Default is normally 0400 
 
 
 $fpos = $fpos +36
@@ -1272,6 +1301,7 @@ $CharacterEntry | Add-Member -type NoteProperty -Name 'WeaponTurn' -Value $Weapo
 $CharacterEntry | Add-Member -type NoteProperty -Name 'Brightness' -Value $Brightness
 $CharacterEntry | Add-Member -type NoteProperty -Name 'ComRange' -Value $ComRange
 $CharacterEntry | Add-Member -type NoteProperty -Name 'BumpMode' -Value $BumpMode
+$CharacterEntry | Add-Member -type NoteProperty -Name 'BumpCount' -Value $BumpCount
 $CharacterEntry | Add-Member -type NoteProperty -Name 'Vehicle' -Value $Vehicle
 $CharacterEntry | Add-Member -type NoteProperty -Name 'LinkPassenger' -Value $LinkPassenger
 $CharacterEntry | Add-Member -type NoteProperty -Name 'Within' -Value $Within
@@ -1314,6 +1344,99 @@ $CharacterEntry | Add-Member -type NoteProperty -Name 'Weapons Carried List' -Va
 
 #Vehicle data here
 
+if ($Thingtype -eq 2 ){  #structure for vehicle specific output
+
+$VehicleEntry  = New-Object PSObject
+$VehicleEntry | Add-Member -type NoteProperty -Name 'Character No.' -Value $counter
+$VehicleEntry | Add-Member -type NoteProperty -Name 'Parent' -Value $Parent
+$VehicleEntry | Add-Member -type NoteProperty -Name 'Next' -Value $Next
+$VehicleEntry | Add-Member -type NoteProperty -Name 'LinkParent' -Value $LinkParent
+$VehicleEntry | Add-Member -type NoteProperty -Name 'Link Child' -Value $LinkChild
+$VehicleEntry | Add-Member -type NoteProperty -Name 'Character Type' -Value $type
+$VehicleEntry | Add-Member -type NoteProperty -Name 'Character Name' -Value $charactername
+$VehicleEntry | Add-Member -type NoteProperty -Name 'Thing Type' -Value $thingtype
+$VehicleEntry | Add-Member -type NoteProperty -Name 'Vehicle Type' -Value $vehicletype
+$VehicleEntry | Add-Member -type NoteProperty -Name 'State' -Value $state
+$VehicleEntry | Add-Member -type NoteProperty -Name 'Flag' -Value $flag
+$VehicleEntry | Add-Member -type NoteProperty -Name 'LinkSame' -Value $LinkSame
+$VehicleEntry | Add-Member -type NoteProperty -Name 'LinkSame Group' -Value $LinkSameGroup
+$VehicleEntry | Add-Member -type NoteProperty -Name 'Radius' -Value $Radius
+$VehicleEntry | Add-Member -type NoteProperty -Name 'Thing Offset' -Value $ThingOffset
+$VehicleEntry | Add-Member -type NoteProperty -Name 'X Position' -Value $map_posx
+$VehicleEntry | Add-Member -type NoteProperty -Name 'Y Position' -Value $map_posy
+$VehicleEntry | Add-Member -type NoteProperty -Name 'Z Position' -Value $map_posz
+$VehicleEntry | Add-Member -type NoteProperty -Name 'Frame' -Value $Frame
+$VehicleEntry | Add-Member -type NoteProperty -Name 'StartFrame' -Value $StartFrame
+$VehicleEntry | Add-Member -type NoteProperty -Name 'Timer1' -Value $Timer1
+$VehicleEntry | Add-Member -type NoteProperty -Name 'StartTimer1' -Value $StartTimer1
+$VehicleEntry | Add-Member -type NoteProperty -Name 'VX' -Value $VX
+$VehicleEntry | Add-Member -type NoteProperty -Name 'VY' -Value $VY
+$VehicleEntry | Add-Member -type NoteProperty -Name 'VZ' -Value $VZ
+$VehicleEntry | Add-Member -type NoteProperty -Name 'Speed' -Value $Speed
+$VehicleEntry | Add-Member -type NoteProperty -Name 'Health' -Value $Health
+$VehicleEntry | Add-Member -type NoteProperty -Name 'Owner' -Value $Owner
+$VehicleEntry | Add-Member -type NoteProperty -Name 'PathOffSet' -Value $PathOffSet
+$VehicleEntry | Add-Member -type NoteProperty -Name 'SubState' -Value $Substate
+$VehicleEntry | Add-Member -type NoteProperty -Name 'PTarget' -Value $PTarget
+$VehicleEntry | Add-Member -type NoteProperty -Name 'Flag2' -Value $Flag2
+$VehicleEntry | Add-Member -type NoteProperty -Name 'GotoThingIndex' -Value $Gotothingindex
+$VehicleEntry | Add-Member -type NoteProperty -Name 'OldTarget' -Value $OldTarget
+$VehicleEntry | Add-Member -type NoteProperty -Name 'PathIndex' -Value $PathIndex
+$VehicleEntry | Add-Member -type NoteProperty -Name 'UniqueID' -Value $UniqueID
+$VehicleEntry | Add-Member -type NoteProperty -Name 'Group' -Value $Group
+$VehicleEntry | Add-Member -type NoteProperty -Name 'EffectiveGroup' -Value $EffectiveGroup
+$VehicleEntry | Add-Member -type NoteProperty -Name 'Object' -Value $Object
+$VehicleEntry | Add-Member -type NoteProperty -Name 'MatrixIndex' -Value $MatrixIndex
+$VehicleEntry | Add-Member -type NoteProperty -Name 'NumbObjects' -Value $NumbObjects
+$VehicleEntry | Add-Member -type NoteProperty -Name 'Dummy2' -Value $Dummy2
+$VehicleEntry | Add-Member -type NoteProperty -Name 'WeaponTurn' -Value $WeaponTurn
+$VehicleEntry | Add-Member -type NoteProperty -Name 'ReqdSpeed' -Value $ReqdSpeed
+$VehicleEntry | Add-Member -type NoteProperty -Name 'MaxSpeed' -Value $MaxSpeed
+$VehicleEntry | Add-Member -type NoteProperty -Name 'PassengerHead' -Value $PassengerHead
+$VehicleEntry | Add-Member -type NoteProperty -Name 'TNode' -Value $TNode
+$VehicleEntry | Add-Member -type NoteProperty -Name 'AngleDY' -Value $AngleDY
+$VehicleEntry | Add-Member -type NoteProperty -Name 'AngleX' -Value $AngleX
+$VehicleEntry | Add-Member -type NoteProperty -Name 'AngleY' -Value $AngleY
+$VehicleEntry | Add-Member -type NoteProperty -Name 'AngleZ' -Value $AngleZ
+$VehicleEntry | Add-Member -type NoteProperty -Name 'GotoX' -Value $GotoX
+$VehicleEntry | Add-Member -type NoteProperty -Name 'GotoY' -Value $GotoY
+$VehicleEntry | Add-Member -type NoteProperty -Name 'GotoZ' -Value $GotoZ
+$VehicleEntry | Add-Member -type NoteProperty -Name 'VehicleAcceleration' -Value $VehicleAcceleration
+$VehicleEntry | Add-Member -type NoteProperty -Name 'LeisurePlace' -Value $LeisurePlace
+$VehicleEntry | Add-Member -type NoteProperty -Name 'TargetDX' -Value $TargetDX
+$VehicleEntry | Add-Member -type NoteProperty -Name 'TargetDY' -Value $TargetDY
+$VehicleEntry | Add-Member -type NoteProperty -Name 'TargetDZ' -Value $TargetDZ
+$VehicleEntry | Add-Member -type NoteProperty -Name 'OnFace' -Value $OnFace
+$VehicleEntry | Add-Member -type NoteProperty -Name 'WorkPlace' -Value $WorkPlace
+$VehicleEntry | Add-Member -type NoteProperty -Name 'ComHead' -Value $ComHead
+$VehicleEntry | Add-Member -type NoteProperty -Name 'ComCur' -Value $ComCur
+$VehicleEntry | Add-Member -type NoteProperty -Name 'Timer2' -Value $Timer2
+$VehicleEntry | Add-Member -type NoteProperty -Name 'RecoilTimer' -Value $RecoilTimer
+$VehicleEntry | Add-Member -type NoteProperty -Name 'MaxHealth' -Value $MaxHealth
+$VehicleEntry | Add-Member -type NoteProperty -Name 'Dummy' -Value $Dummy
+$VehicleEntry | Add-Member -type NoteProperty -Name 'Dummy12' -Value $Dummy12
+$VehicleEntry | Add-Member -type NoteProperty -Name 'SubThing' -Value $SubThing
+$VehicleEntry | Add-Member -type NoteProperty -Name 'Agok' -Value $Agok
+$VehicleEntry | Add-Member -type NoteProperty -Name 'WobbleZP' -Value $WobbleZP
+$VehicleEntry | Add-Member -type NoteProperty -Name 'WobbleZV' -Value $WobbleZV
+$VehicleEntry | Add-Member -type NoteProperty -Name 'Armour' -Value $Armour
+$VehicleEntry | Add-Member -type NoteProperty -Name 'PissedOffWithWaiting' -Value $PissedOffWithWaiting
+$VehicleEntry | Add-Member -type NoteProperty -Name 'ZebraOldHealth' -Value $ZebraOldHealth
+$VehicleEntry | Add-Member -type NoteProperty -Name 'destx' -Value $destx
+$VehicleEntry | Add-Member -type NoteProperty -Name 'destz' -Value $destz
+$VehicleEntry | Add-Member -type NoteProperty -Name 'ObjectWidth'  -Value $ObjectWidth
+$VehicleEntry | Add-Member -type NoteProperty -Name 'Objectskewleft'  -Value $Objectskewleft
+$VehicleEntry | Add-Member -type NoteProperty -Name 'Objectskewright'  -Value $Objectskewright
+$VehicleEntry | Add-Member -type NoteProperty -Name 'ObjectRoll'  -Value $ObjectRoll
+$VehicleEntry | Add-Member -type NoteProperty -Name 'ObjectHeight'  -Value $ObjectHeight
+$VehicleEntry | Add-Member -type NoteProperty -Name 'ObjectPitch'  -Value $ObjectPitch
+$VehicleEntry | Add-Member -type NoteProperty -Name 'ObjectSkew2'  -Value $ObjectSkew2
+$VehicleEntry | Add-Member -type NoteProperty -Name 'ObjectStretch'  -Value $ObjectStretch
+$VehicleEntry | Add-Member -type NoteProperty -Name 'ObjectLength'  -Value $ObjectLength
+$VFileoutput += $Vehicleentry
+}
+
+
 if ($Thingtype -eq 2 -OR $counter -eq 1){ 
 $CharacterEntry | Add-Member -type NoteProperty -Name 'ObjectWidth'  -Value $ObjectWidth
 $CharacterEntry | Add-Member -type NoteProperty -Name 'Objectskewleft'  -Value $Objectskewleft
@@ -1344,6 +1467,12 @@ $fileext = $csvname+"Characters.csv"
 write-host "Exporting to $fileext"
 
 $Fileoutput | export-csv -NoTypeInformation $fileext
+
+
+$vfileext = $csvname+"Vehicles.csv"
+write-host "Exporting vehicles to $vfileext"
+
+$VFileoutput | export-csv -NoTypeInformation $vfileext
 
 #commands
 
